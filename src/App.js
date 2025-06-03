@@ -1,5 +1,5 @@
 import './App.css';
-import GlobalExpedyte from "./Home";
+import GlobalExpedyte from './Campaign';
 
 
 function App() {
