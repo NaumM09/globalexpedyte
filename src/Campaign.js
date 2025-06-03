@@ -481,110 +481,191 @@ const GlobalExpedyte = () => {
   };
 
   // Service Tile with enhanced hover effect
-  const ServiceTile = ({ icon, title, wittySubtitle, description, service, delay, gradient, features, projects, hoverImage, hoverTitle, hoverDescription }) => {
-    const [isHovered, setIsHovered] = useState(false); // eslint-disable-next-line
-    const [currentProject, setCurrentProject] = useState(0);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    
-    useEffect(() => {
-      if (!isHovered || !projects) return;
-      
-      const interval = setInterval(() => {
-        setCurrentProject(prev => (prev + 1) % projects.length);
-      }, 2500);
-      
-      return () => clearInterval(interval);
-    }, [isHovered, projects]);
-
-    const handleMouseMove = (e) => {
-      const rect = e.currentTarget.getBoundingClientRect();
-      setMousePosition({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      });
+// Enhanced Service Tile with Multiple Mobile Preview Options
+const ServiceTile = ({ icon, title, wittySubtitle, description, service, delay, gradient, features, projects, hoverImage, hoverTitle, hoverDescription, previewMode = 'tap' }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [currentProject, setCurrentProject] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  
+  // Detect if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
     };
     
-    return (
-      <motion.div
-        style={{ position: 'relative', cursor: 'pointer' }}
-        initial={{ opacity: 0, y: 100 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
-        whileHover={{ y: -15 }}
-        whileTap={{ scale: 0.96 }}
-        onClick={() => {
-          setSelectedService(service);
-          setCurrentSection('contact');
-        }}
-        onHoverStart={() => {
-          setIsHovered(true);
-          setCurrentProject(0);
-        }}
-        onHoverEnd={() => setIsHovered(false)}
-        onMouseMove={handleMouseMove}
-      >
-        {/* Enhanced Hover Overlay - Dashboard Style */}
-        <AnimatePresence>
-          {isHovered && (
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Auto-cycle preview on mobile (Option 1: Automatic preview)
+  useEffect(() => {
+    if (isMobile && previewMode === 'auto') {
+      const interval = setInterval(() => {
+        setShowPreview(prev => !prev);
+      }, 4000); // Show preview every 4 seconds
+      
+      return () => clearInterval(interval);
+    }
+  }, [isMobile, previewMode]);
+
+  useEffect(() => {
+    if (!showPreview || !projects) return;
+    
+    const interval = setInterval(() => {
+      setCurrentProject(prev => (prev + 1) % projects.length);
+    }, 2500);
+    
+    return () => clearInterval(interval);
+  }, [showPreview, projects]);
+
+  const handleMouseMove = (e) => {
+    if (isMobile) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    });
+  };
+
+  // Option 1: Tap to preview (tap anywhere on card)
+  const handleTapPreview = (e) => {
+    if (isMobile && previewMode === 'tap') {
+      e.preventDefault();
+      setShowPreview(!showPreview);
+      setIsHovered(!showPreview);
+      if (!showPreview) {
+        setCurrentProject(0);
+      }
+    }
+  };
+
+  // Option 2: Preview button (dedicated preview button)
+  const handlePreviewButton = (e) => {
+    e.stopPropagation(); // Prevent card click
+    setShowPreview(!showPreview);
+    setIsHovered(!showPreview);
+    if (!showPreview) {
+      setCurrentProject(0);
+    }
+  };
+
+  // Option 3: Double tap to preview
+  const [tapCount, setTapCount] = useState(0);
+  const handleDoubleTap = () => {
+    if (isMobile && previewMode === 'doubletap') {
+      setTapCount(prev => prev + 1);
+      
+      setTimeout(() => {
+        if (tapCount === 1) { // Double tap detected
+          setShowPreview(!showPreview);
+          setIsHovered(!showPreview);
+          if (!showPreview) {
+            setCurrentProject(0);
+          }
+        }
+        setTapCount(0);
+      }, 300);
+    }
+  };
+
+  const handleCardClick = () => {
+    if (!showPreview) {
+      setSelectedService(service);
+      setCurrentSection('contact');
+    }
+  };
+
+  const isPreviewVisible = isMobile ? showPreview : isHovered;
+  
+  return (
+    <motion.div
+      style={{ 
+        position: 'relative', 
+        cursor: 'pointer',
+        width: '100%',
+        maxWidth: '100%',
+        overflow: 'visible'
+      }}
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.9, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      whileHover={!isMobile ? { y: -15 } : {}}
+      whileTap={{ scale: 0.98 }}
+      onClick={previewMode === 'tap' ? handleTapPreview : handleCardClick}
+      onDoubleClick={handleDoubleTap}
+      onHoverStart={() => !isMobile && setIsHovered(true)}
+      onHoverEnd={() => !isMobile && setIsHovered(false)}
+      onMouseMove={handleMouseMove}
+    >
+      {/* Preview Overlay */}
+      <AnimatePresence>
+        {isPreviewVisible && (
+          <motion.div
+            style={{
+              position: 'absolute',
+              top: isMobile ? '-10px' : '-20px',
+              left: isMobile ? '-10px' : '-20px',
+              right: isMobile ? '-10px' : '-20px',
+              bottom: isMobile ? '-10px' : '-20px',
+              zIndex: 20,
+              borderRadius: isMobile ? '20px' : '30px',
+              overflow: 'hidden',
+              boxShadow: isMobile 
+                ? '0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 255, 136, 0.3)'
+                : '0 30px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 136, 0.3)',
+              border: '2px solid rgba(0, 255, 136, 0.4)',
+              pointerEvents: 'none'
+            }}
+            initial={{ 
+              opacity: 0, 
+              scale: 0.8,
+              rotateY: isMobile ? 0 : -15,
+              rotateX: isMobile ? 0 : 5
+            }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              rotateY: 0,
+              rotateX: 0
+            }}
+            exit={{ 
+              opacity: 0, 
+              scale: 1.1,
+              rotateY: isMobile ? 0 : 15,
+              rotateX: isMobile ? 0 : -5
+            }}
+            transition={{ 
+              duration: isMobile ? 0.4 : 0.6, 
+              ease: [0.25, 0.46, 0.45, 0.94] 
+            }}
+          >
+            {/* Background Image */}
             <motion.div
               style={{
-                position: 'absolute',
-                top: '-20px',
-                left: '-20px',
-                right: '-20px',
-                bottom: '-20px',
-                zIndex: 20,
-                borderRadius: '30px',
-                overflow: 'hidden',
-                boxShadow: '0 30px 80px rgba(0, 0, 0, 0.4), 0 0 40px rgba(0, 255, 136, 0.3)',
-                border: '2px solid rgba(0, 255, 136, 0.4)',
-                pointerEvents: 'none'
+                width: '100%',
+                height: '100%',
+                backgroundImage: `url(${hoverImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                position: 'relative'
               }}
-              initial={{ 
-                opacity: 0, 
-                scale: 0.8, 
-                rotateY: -15,
-                rotateX: 5
-              }}
-              animate={{ 
-                opacity: 1, 
-                scale: 1, 
-                rotateY: 0,
-                rotateX: 0
-              }}
-              exit={{ 
-                opacity: 0, 
-                scale: 1.1, 
-                rotateY: 15,
-                rotateX: -5
-              }}
-              transition={{ 
-                duration: 0.6, 
-                ease: [0.25, 0.46, 0.45, 0.94] 
-              }}
+              animate={!isMobile ? { scale: 1.1 } : {}}
+              transition={{ duration: 8, ease: "easeInOut" }}
             >
-              {/* Background Image */}
-              <motion.div
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  backgroundImage: `url(${hoverImage})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  position: 'relative'
-                }}
-                animate={{ scale: 1.1 }}
-                transition={{ duration: 8, ease: "easeInOut" }}
-              >
-                {/* Gradient Overlay */}
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3), rgba(0,0,0,0.8))'
-                }} />
+              {/* Gradient Overlay */}
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3), rgba(0,0,0,0.8))'
+              }} />
 
-                {/* Animated Grid Overlay */}
+              {/* Animated Grid Overlay */}
+              {!isMobile && (
                 <motion.div
                   style={{
                     position: 'absolute',
@@ -602,116 +683,149 @@ const GlobalExpedyte = () => {
                     ease: "linear"
                   }}
                 />
-              </motion.div>
+              )}
+            </motion.div>
 
-              {/* Content Overlay */}
-              <motion.div
+            {/* Close button for mobile */}
+            {isMobile && (
+              <motion.button
                 style={{
                   position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  padding: '40px',
+                  top: '15px',
+                  right: '15px',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  background: 'rgba(0,0,0,0.7)',
+                  border: '2px solid rgba(255,255,255,0.3)',
                   color: 'white',
-                  zIndex: 10
-                }}
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-              >
-                <motion.div
-                  style={{
-                    display: 'inline-block',
-                    background: 'rgba(0, 255, 136, 0.2)',
-                    border: '1px solid rgba(0, 255, 136, 0.4)',
-                    borderRadius: '20px',
-                    padding: '8px 16px',
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    color: '#00ff88',
-                    marginBottom: '15px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px'
-                  }}
-                  animate={{ 
-                    boxShadow: [
-                      '0 0 20px rgba(0, 255, 136, 0.3)',
-                      '0 0 30px rgba(0, 255, 136, 0.5)',
-                      '0 0 20px rgba(0, 255, 136, 0.3)'
-                    ]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  Live Preview
-                </motion.div>
-
-                <h3 style={{
-                  fontSize: '2.5rem',
-                  fontWeight: '200',
-                  margin: '0 0 15px 0',
-                  lineHeight: '1.1',
-                  color: 'white'
-                }}>
-                  {hoverTitle}
-                </h3>
-                
-                <p style={{
                   fontSize: '1.2rem',
-                  color: 'rgba(255,255,255,0.9)',
-                  margin: 0,
-                  maxWidth: '400px',
-                  lineHeight: '1.5'
-                }}>
-                  {hoverDescription}
-                </p>
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  pointerEvents: 'auto',
+                  zIndex: 30
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowPreview(false);
+                  setIsHovered(false);
+                }}
+                whileTap={{ scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                ×
+              </motion.button>
+            )}
 
-                {/* Interactive Elements */}
-                <motion.div
-                  style={{
-                    display: 'flex',
-                    gap: '15px',
-                    marginTop: '25px'
-                  }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  {['View Details', 'Start Project'].map((text, idx) => (
-                    <motion.button
-                      key={text}
-                      style={{
-                        background: idx === 0 
-                          ? 'linear-gradient(45deg, #00ff88, #5dade2)' 
-                          : 'rgba(255,255,255,0.1)',
-                        border: idx === 0 
-                          ? 'none' 
-                          : '2px solid rgba(255,255,255,0.3)',
-                        color: 'white',
-                        padding: '12px 25px',
-                        borderRadius: '25px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        pointerEvents: 'auto'
-                      }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      animate={{ 
-                        y: [0, -5, 0],
-                      }}
-                      transition={{ 
-                        duration: 3,
-                        repeat: Infinity,
-                        delay: idx * 0.5
-                      }}
-                    >
-                      {text}
-                    </motion.button>
-                  ))}
-                </motion.div>
+            {/* Content Overlay */}
+            <motion.div
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                padding: isMobile ? '20px' : '40px',
+                color: 'white',
+                zIndex: 10
+              }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              <motion.div
+                style={{
+                  display: 'inline-block',
+                  background: 'rgba(0, 255, 136, 0.2)',
+                  border: '1px solid rgba(0, 255, 136, 0.4)',
+                  borderRadius: '20px',
+                  padding: '8px 16px',
+                  fontSize: isMobile ? '0.8rem' : '0.9rem',
+                  fontWeight: '600',
+                  color: '#00ff88',
+                  marginBottom: '15px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '1px'
+                }}
+              >
+                {projects && projects.length > 1 ? (
+                  `Project ${currentProject + 1}/${projects.length}`
+                ) : (
+                  'Live Preview'
+                )}
               </motion.div>
 
-              {/* Mouse Follow Glow Effect */}
+              <h3 style={{
+                fontSize: isMobile ? '1.8rem' : '2.5rem',
+                fontWeight: '200',
+                margin: '0 0 15px 0',
+                lineHeight: '1.1',
+                color: 'white'
+              }}>
+                {projects && projects[currentProject] ? projects[currentProject].title : hoverTitle}
+              </h3>
+              
+              <p style={{
+                fontSize: isMobile ? '1rem' : '1.2rem',
+                color: 'rgba(255,255,255,0.9)',
+                margin: 0,
+                maxWidth: '400px',
+                lineHeight: '1.5'
+              }}>
+                {projects && projects[currentProject] ? projects[currentProject].description : hoverDescription}
+              </p>
+
+              {/* Interactive Elements */}
+              <motion.div
+                style={{
+                  display: 'flex',
+                  gap: isMobile ? '10px' : '15px',
+                  marginTop: '25px',
+                  flexWrap: 'wrap'
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                {['View Details', 'Start Project'].map((text, idx) => (
+                  <motion.button
+                    key={text}
+                    style={{
+                      background: idx === 0 
+                        ? 'linear-gradient(45deg, #00ff88, #5dade2)' 
+                        : 'rgba(255,255,255,0.1)',
+                      border: idx === 0 
+                        ? 'none' 
+                        : '2px solid rgba(255,255,255,0.3)',
+                      color: 'white',
+                      padding: isMobile ? '10px 20px' : '12px 25px',
+                      borderRadius: '25px',
+                      fontSize: isMobile ? '0.8rem' : '0.9rem',
+                      fontWeight: '600',
+                      cursor: 'pointer',
+                      pointerEvents: 'auto'
+                    }}
+                    whileHover={!isMobile ? { scale: 1.05 } : {}}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (idx === 1) { // Start Project
+                        setSelectedService(service);
+                        setCurrentSection('contact');
+                      }
+                    }}
+                  >
+                    {text}
+                  </motion.button>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            {/* Mouse Follow Glow Effect - Desktop only */}
+            {!isMobile && (
               <motion.div
                 style={{
                   position: 'absolute',
@@ -729,133 +843,173 @@ const GlobalExpedyte = () => {
                 }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
               />
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        {/* Main Card */}
+      {/* Main Card */}
+      <motion.div
+        style={{
+          background: 'rgba(255,255,255,0.04)',
+          border: '1px solid rgba(255,255,255,0.15)',
+          borderRadius: '25px',
+          padding: isMobile ? '30px 25px' : '40px 30px',
+          height: 'auto', // Changed from fixed height to auto
+          minHeight: isMobile ? '350px' : '450px', // Increased min-height for desktop
+          position: 'relative',
+          overflow: 'hidden',
+          backdropFilter: 'blur(25px)',
+          width: '100%',
+          maxWidth: '100%',
+          boxSizing: 'border-box',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+        whileHover={!isMobile ? { 
+          backgroundColor: 'rgba(255,255,255,0.1)',
+          borderColor: 'rgba(0, 255, 136, 0.4)'
+        } : {}}
+        transition={{ duration: 0.5 }}
+      >
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: gradient,
+          opacity: 0.12
+        }} />
+
         <motion.div
           style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(255,255,255,0.15)',
-            borderRadius: '25px',
-            padding: '45px 35px',
-            height: '400px',
-            position: 'relative',
-            overflow: 'hidden',
-            backdropFilter: 'blur(25px)'
+            fontSize: isMobile ? '3rem' : '3.5rem',
+            marginBottom: isMobile ? '20px' : '25px',
+            padding: isMobile ? '15px' : '18px',
+            background: 'rgba(255,255,255,0.12)',
+            borderRadius: '18px',
+            display: 'inline-block'
           }}
-          whileHover={{ 
-            backgroundColor: 'rgba(255,255,255,0.1)',
-            borderColor: 'rgba(0, 255, 136, 0.4)'
-          }}
-          transition={{ duration: 0.5 }}
+          whileHover={!isMobile ? { 
+            scale: 1.15, 
+            rotate: 15,
+            backgroundColor: 'rgba(0, 255, 136, 0.25)'
+          } : {}}
+          transition={{ type: "spring", stiffness: 400 }}
         >
+          {icon}
+        </motion.div>
+
+        <div>
+          <h3 style={{
+            color: 'white',
+            fontSize: isMobile ? '1.5rem' : '1.7rem',
+            fontWeight: '600',
+            marginBottom: '8px'
+          }}>
+            {title}
+          </h3>
+
+          <p style={{
+            color: '#ff4757',
+            fontSize: isMobile ? '0.9rem' : '1rem',
+            fontStyle: 'italic',
+            marginBottom: '18px',
+            fontWeight: '500'
+          }}>
+            {wittySubtitle}
+          </p>
+          
+          <p style={{
+            color: 'rgba(255,255,255,0.75)',
+            fontSize: isMobile ? '0.9rem' : '0.95rem',
+            lineHeight: '1.6',
+            marginBottom: '25px'
+          }}>
+            {description}
+          </p>
+
+          {/* Features */}
           <div style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: gradient,
-            opacity: 0.12
-          }} />
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '8px',
+            marginBottom: '25px'
+          }}>
+            {features.map((feature, idx) => (
+              <span
+                key={idx}
+                style={{
+                  background: 'rgba(0,255,136,0.15)',
+                  color: '#00ff88',
+                  padding: '4px 12px',
+                  borderRadius: '12px',
+                  fontSize: isMobile ? '0.75rem' : '0.8rem',
+                  fontWeight: '500'
+                }}
+              >
+                {feature}
+              </span>
+            ))}
+          </div>
+
+          {/* Mobile Preview Button (Option 2) */}
+          {isMobile && previewMode === 'button' && (
+            <motion.button
+              style={{
+                background: 'linear-gradient(45deg, #ff4757, #00ff88)',
+                border: 'none',
+                color: 'white',
+                padding: '12px 20px',
+                borderRadius: '25px',
+                fontSize: '0.9rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                marginBottom: '15px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+              onClick={handlePreviewButton}
+              whileTap={{ scale: 0.95 }}
+            >
+              👁️ {showPreview ? 'Hide Preview' : 'See Live Preview'}
+            </motion.button>
+          )}
 
           <motion.div
             style={{
-              fontSize: '3.5rem',
-              marginBottom: '25px',
-              padding: '18px',
-              background: 'rgba(255,255,255,0.12)',
-              borderRadius: '18px',
-              display: 'inline-block'
+              display: 'flex',
+              alignItems: 'center',
+              color: '#00ff88',
+              fontSize: isMobile ? '0.95rem' : '1rem',
+              fontWeight: '600'
             }}
-            whileHover={{ 
-              scale: 1.15, 
-              rotate: 15,
-              backgroundColor: 'rgba(0, 255, 136, 0.25)'
-            }}
+            initial={{ x: 0 }}
+            whileHover={!isMobile ? { x: 8 } : {}}
             transition={{ type: "spring", stiffness: 400 }}
           >
-            {icon}
-          </motion.div>
-
-          <div>
-            <h3 style={{
-              color: 'white',
-              fontSize: '1.7rem',
-              fontWeight: '600',
-              marginBottom: '8px'
-            }}>
-              {title}
-            </h3>
-
-            <p style={{
-              color: '#ff4757',
-              fontSize: '1rem',
-              fontStyle: 'italic',
-              marginBottom: '18px',
-              fontWeight: '500'
-            }}>
-              {wittySubtitle}
-            </p>
-            
-            <p style={{
-              color: 'rgba(255,255,255,0.75)',
-              fontSize: '0.95rem',
-              lineHeight: '1.6',
-              marginBottom: '25px'
-            }}>
-              {description}
-            </p>
-
-            {/* Features */}
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '8px',
-              marginBottom: '25px'
-            }}>
-              {features.map((feature, idx) => (
-                <span
-                  key={idx}
-                  style={{
-                    background: 'rgba(0,255,136,0.15)',
-                    color: '#00ff88',
-                    padding: '4px 12px',
-                    borderRadius: '12px',
-                    fontSize: '0.8rem',
-                    fontWeight: '500'
-                  }}
-                >
-                  {feature}
-                </span>
-              ))}
-            </div>
-
-            <motion.div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                color: '#00ff88',
-                fontSize: '1rem',
-                fontWeight: '600'
-              }}
-              initial={{ x: 0 }}
-              whileHover={{ x: 8 }}
+            <span>
+              {isMobile ? (
+                previewMode === 'tap' ? 'Tap to Preview' :
+                previewMode === 'button' ? 'Get This Service' :
+                previewMode === 'doubletap' ? 'Double-tap to Preview' :
+                'Get This Service'
+              ) : (
+                isHovered ? 'See Live Preview' : 'Get This Service'
+              )}
+            </span>
+            <motion.span
+              style={{ marginLeft: '10px' }}
+              animate={{ x: isPreviewVisible ? 8 : 0 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
-              <span>{isHovered ? 'See Live Preview' : 'Get This Service'}</span>
-              <motion.span
-                style={{ marginLeft: '10px' }}
-                animate={{ x: isHovered ? 8 : 0 }}
-                transition={{ type: "spring", stiffness: 400 }}
-              >
-                →
-              </motion.span>
-            </motion.div>
-          </div>
-        </motion.div>
+              →
+            </motion.span>
+          </motion.div>
+        </div>
       </motion.div>
-    );
-  };
+    </motion.div>
+  );
+};
 
   // Custom Cursor
   const CustomCursor = () => (
