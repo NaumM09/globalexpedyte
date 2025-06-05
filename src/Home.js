@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 const Home = ({ qrSource = 'direct', setCurrentSection }) => {
   const containerRef = useRef(null);
@@ -8,6 +8,58 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
   // Subtle parallax for depth
   const yContent = useTransform(scrollYProgress, [0, 1], ['0%', '-5%']);
   const yBg = useTransform(scrollYProgress, [0, 1], ['0%', '10%']);
+
+  // Rotating text component
+  const RotatingText = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    
+    const services = [
+      { text: "WEBSITE?", color: "#ff3131" },
+      { text: "NEW LOGO?", color: "#5ce1e6" },
+      { text: "BUSINESS EMAIL?", color: "#43f8ac" },
+      { text: "SOCIAL MEDIA MANAGER?", color: "#ff3131" }
+    ];
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % services.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }, [services.length]);
+
+    return (
+      <div style={{ 
+        position: 'relative',
+        height: 'clamp(50px, 6vh, 80px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <AnimatePresence mode="wait">
+          <motion.span
+            key={currentIndex}
+            style={{
+              fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
+              fontWeight: '400',
+              color: services[currentIndex].color,
+              position: 'absolute',
+              width: '100%',
+              textAlign: 'center'
+            }}
+            initial={{ opacity: 0, y: 50, rotateX: -90 }}
+            animate={{ opacity: 1, y: 0, rotateX: 0 }}
+            exit={{ opacity: 0, y: -50, rotateX: 90 }}
+            transition={{ 
+              duration: 0.6,
+              ease: [0.23, 1, 0.32, 1]
+            }}
+          >
+            {services[currentIndex].text}
+          </motion.span>
+        </AnimatePresence>
+      </div>
+    );
+  };
 
   // Minimal geometric logo
   const GeometricLogo = () => {
@@ -424,30 +476,29 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
       >
         <GeometricLogo />
         
-        {/* Main headline - Updated for clarity */}
+        {/* Main headline - Dynamic rotating text */}
         <motion.h1 
           style={{
             color: '#000',
-            fontSize: 'clamp(4rem, 10vw, 8rem)',
+            fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
             fontWeight: '200',
             margin: '0 0 20px 0',
             letterSpacing: '-2px',
-            lineHeight: '0.9',
-            fontFamily: 'system-ui, -apple-system, sans-serif'
+            lineHeight: '1.1',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            minHeight: 'clamp(160px, 16vh, 220px)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center'
           }}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
         >
-          CODE
-          <br />
-          <span style={{ 
-            fontSize: 'clamp(2rem, 5vw, 4rem)', 
-            fontWeight: '400',
-            opacity: 0.7
-          }}>
-            CRAFTERS
-          </span>
+          <div style={{ marginBottom: 'clamp(10px, 2vh, 15px)' }}>
+            NEED A
+          </div>
+          <RotatingText />
         </motion.h1>
 
         {/* Subtitle - Updated for SEO and clarity */}
@@ -466,7 +517,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.2 }}
         >
-          BRANDING • MOBILE APPS • WEBSITES
+          CUSTOM SOFTWARE • MOBILE APPS • WEBSITES
         </motion.div>
 
         <ProductShowcase />
