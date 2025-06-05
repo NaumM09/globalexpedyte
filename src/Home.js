@@ -30,7 +30,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
     return (
       <div style={{ 
         position: 'relative',
-        height: 'clamp(50px, 6vh, 80px)',
+        height: 'clamp(70px, 8vh, 120px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
@@ -486,7 +486,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
             letterSpacing: '-2px',
             lineHeight: '1.1',
             fontFamily: 'system-ui, -apple-system, sans-serif',
-            minHeight: 'clamp(160px, 16vh, 220px)',
+            minHeight: 'clamp(200px, 20vh, 280px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center'
@@ -495,7 +495,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
         >
-          <div style={{ marginBottom: 'clamp(10px, 2vh, 15px)' }}>
+          <div style={{ marginBottom: 'clamp(15px, 3vh, 25px)' }}>
             NEED A
           </div>
           <RotatingText />
