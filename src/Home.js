@@ -14,10 +14,10 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     
     const services = [
-      { text: "A WEBSITE?", color: "#ff3131" },
-      { text: "A NEW LOGO?", color: "#5ce1e6" },
-      { text: "BUSINESS EMAIL?", color: "#43f8ac" },
-      { text: "SOCIAL MEDIA MANAGER?", color: "#ff3131" }
+      { text: "A WEBSITE?", color: "#5ce1e6"  },
+      { text: "A NEW LOGO?", color: "#43f8ac" },
+      { text: "BUSINESS EMAIL?", color:"#5ce1e6" },
+      { text: "BRANDING?", color: "#43f8ac"}
     ];
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
     return (
       <div style={{ 
         position: 'relative',
-        height: 'clamp(35px, 4vh, 80px)',
+        height: 'clamp(40px, 5vh, 90px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
@@ -39,7 +39,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           <motion.span
             key={currentIndex}
             style={{
-              fontSize: 'clamp(1.2rem, 3vw, 2.8rem)',
+              fontSize: 'clamp(1.3rem, 3.5vw, 3.2rem)',
               fontWeight: '400',
               color: services[currentIndex].color,
               position: 'absolute',
@@ -558,7 +558,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.2 }}
         >
-          BUSINESS BRANDING • MOBILE APPS • WEBSITES
+          SOCIAL MEDIA MANAGER • MOBILE APPS • WEBSITES
         </motion.div>
 
         <ProductShowcase />
