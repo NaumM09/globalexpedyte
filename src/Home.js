@@ -14,10 +14,10 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     
     const services = [
-      { text: "WEBSITE?", color: "#ff3131" },
-      { text: "NEW LOGO?", color: "#5ce1e6" },
+      { text: "A WEBSITE?", color: "#ff3131" },
+      { text: "A NEW LOGO?", color: "#5ce1e6" },
       { text: "BUSINESS EMAIL?", color: "#43f8ac" },
-      { text: "SOCIAL MEDIA MANAGER?", color: "#ff3131" }
+      { text: "PRODUCT DESIGN?", color: "#ff3131" }
     ];
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
     return (
       <div style={{ 
         position: 'relative',
-        height: 'clamp(70px, 8vh, 120px)',
+        height: 'clamp(35px, 4vh, 80px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
@@ -39,12 +39,13 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           <motion.span
             key={currentIndex}
             style={{
-              fontSize: 'clamp(2rem, 4.5vw, 3.5rem)',
+              fontSize: 'clamp(1.2rem, 3vw, 2.8rem)',
               fontWeight: '400',
               color: services[currentIndex].color,
               position: 'absolute',
               width: '100%',
-              textAlign: 'center'
+              textAlign: 'center',
+              lineHeight: '1.1'
             }}
             initial={{ opacity: 0, y: 50, rotateX: -90 }}
             animate={{ opacity: 1, y: 0, rotateX: 0 }}
@@ -480,13 +481,13 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
         <motion.h1 
           style={{
             color: '#000',
-            fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+            fontSize: 'clamp(1.5rem, 4vw, 3.5rem)',
             fontWeight: '200',
             margin: '0 0 20px 0',
-            letterSpacing: '-2px',
-            lineHeight: '1.1',
+            letterSpacing: '-1px',
+            lineHeight: '1.3',
             fontFamily: 'system-ui, -apple-system, sans-serif',
-            minHeight: 'clamp(200px, 20vh, 280px)',
+            minHeight: 'clamp(100px, 12vh, 220px)',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center'
@@ -495,8 +496,11 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
         >
-          <div style={{ marginBottom: 'clamp(15px, 3vh, 25px)' }}>
-            NEED A
+          <div style={{ 
+            marginBottom: 'clamp(5px, 1vh, 15px)',
+            fontSize: 'clamp(1.5rem, 4vw, 3.5rem)'
+          }}>
+            NEED 
           </div>
           <RotatingText />
         </motion.h1>
@@ -517,7 +521,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.2 }}
         >
-          CUSTOM SOFTWARE • MOBILE APPS • WEBSITES
+          BUSINESS BRANDING • MOBILE APPS • WEBSITES
         </motion.div>
 
         <ProductShowcase />
