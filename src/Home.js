@@ -2,26 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 
 const Home = ({ qrSource = 'direct', setCurrentSection }) => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll();
-  const isInView = useInView(containerRef, { once: true });
   
   // Subtle parallax for depth
   const yContent = useTransform(scrollYProgress, [0, 1], ['0%', '-5%']);
   const yBg = useTransform(scrollYProgress, [0, 1], ['0%', '10%']);
-  
-  // Mouse tracking for subtle interactions
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ 
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100 
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   // Minimal geometric logo
   const GeometricLogo = () => {
@@ -34,7 +20,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
         style={{ 
           position: 'relative', 
           cursor: 'pointer',
-          marginBottom: '60px' // Reduced from 80px
+          marginBottom: '60px'
         }}
       >
         <motion.div
@@ -109,7 +95,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           position: 'relative',
           width: '300px',
           height: '200px',
-          margin: '40px auto', // Reduced from 60px
+          margin: '40px auto',
           perspective: '1000px'
         }}
         initial={{ opacity: 0, rotateX: 30 }}
@@ -267,9 +253,15 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
         position: 'relative',
         background: '#fefefe',
         overflow: 'hidden',
-        padding: '60px 20px 20px' // Reduced top padding
+        padding: '60px 20px 20px'
       }}
     >
+      {/* SEO-friendly hidden content */}
+      <div style={{ position: 'absolute', left: '-9999px', opacity: 0 }}>
+        <h1>Web Development & Digital Design Agency - Global Expedyte</h1>
+        <p>Professional web development, custom software solutions, mobile app development, and digital branding services. Expert developers and designers creating scalable applications and websites.</p>
+      </div>
+
       {/* Subtle grid background */}
       <motion.div 
         style={{ 
@@ -284,16 +276,16 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
         }}
       />
       
-      {/* Floating marquees */}
+      {/* Floating marquees - Updated with clearer messaging */}
       <div style={{ position: 'absolute', top: '20%', left: 0, right: 0, overflow: 'hidden' }}>
-        <FloatingMarquee text="DIGITAL EXCELLENCE" direction={1} />
+        <FloatingMarquee text="WEB DEVELOPMENT • MOBILE APPS • CUSTOM SOFTWARE" direction={1} />
       </div>
       
       <div style={{ position: 'absolute', bottom: '20%', left: 0, right: 0, overflow: 'hidden' }}>
-        <FloatingMarquee text="GLOBAL EXPEDYTE" direction={-1} />
+        <FloatingMarquee text="DIGITAL AGENCY • GLOBAL EXPEDYTE • FULL-STACK SOLUTIONS" direction={-1} />
       </div>
 
-      {/* Left CTA */}
+      {/* Left CTA - Updated text */}
       <motion.div
         style={{
           position: 'absolute',
@@ -320,7 +312,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           textTransform: 'uppercase',
           marginBottom: '20px'
         }}>
-          PORTFOLIO
+          OUR WORK
         </div>
         
         <motion.button
@@ -360,7 +352,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
             animate={{ top: ['100%', '-100%'] }}
             transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
           />
-          VIEW SERVICES
+          VIEW PROJECTS
         </motion.button>
       </motion.div>
 
@@ -391,7 +383,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           textTransform: 'uppercase',
           marginBottom: '20px'
         }}>
-          CONTACT
+          GET QUOTE
         </div>
         
         <motion.button
@@ -418,7 +410,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           onClick={() => setCurrentSection('contact')}
           transition={{ duration: 0.2 }}
         >
-          START PROJECT
+          HIRE US
         </motion.button>
       </motion.div>
       
@@ -426,12 +418,13 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
         style={{ 
           textAlign: 'center',
           zIndex: 10,
-          maxWidth: '700px', // Reduced from 900px
+          maxWidth: '700px',
           y: yContent 
         }}
       >
         <GeometricLogo />
         
+        {/* Main headline - Updated for clarity */}
         <motion.h1 
           style={{
             color: '#000',
@@ -446,24 +439,25 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
         >
-          SIGNATURE
+          CODE
           <br />
           <span style={{ 
             fontSize: 'clamp(2rem, 5vw, 4rem)', 
             fontWeight: '400',
             opacity: 0.7
           }}>
-            TOUCH
+            CRAFTERS
           </span>
         </motion.h1>
 
+        {/* Subtitle - Updated for SEO and clarity */}
         <motion.div
           style={{
             fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
             color: 'rgba(0,0,0,0.6)',
             fontWeight: '300',
             letterSpacing: '1px',
-            marginBottom: '30px', // Reduced from 40px
+            marginBottom: '30px',
             lineHeight: '1.6',
             textTransform: 'uppercase',
             fontFamily: 'system-ui, -apple-system, sans-serif'
@@ -472,21 +466,21 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.2 }}
         >
-          OF DIGITAL WORKS
+          BRANDING • MOBILE APPS • WEBSITES
         </motion.div>
 
         <ProductShowcase />
 
-        {/* Condensed content based on source */}
+        {/* QR-specific content - Updated messaging */}
         {qrSource !== 'direct' && (
           <motion.div
             style={{
               background: '#fff',
               border: '1px solid rgba(0,0,0,0.08)',
               borderRadius: '0',
-              padding: '30px 25px', // Reduced padding
-              margin: '30px auto', // Reduced margin
-              maxWidth: '450px', // Smaller width
+              padding: '30px 25px',
+              margin: '30px auto',
+              maxWidth: '450px',
               boxShadow: '0 40px 80px rgba(0,0,0,0.03)',
               position: 'relative'
             }}
@@ -512,21 +506,21 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
                 opacity: 0.7
               }}
             >
-              ▲
+              ⚡
             </motion.div>
             
             <h2 style={{
               color: '#000',
-              fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)', // Smaller font
+              fontSize: 'clamp(1.2rem, 2.5vw, 1.6rem)',
               fontWeight: '300',
               margin: '0 0 15px 0',
               letterSpacing: '1px',
               lineHeight: '1.2',
               fontFamily: 'system-ui, -apple-system, sans-serif'
             }}>
-              SCANNING FOR
+              NEED A WEBSITE
               <br />
-              BETTER AGENCIES?
+              OR MOBILE APP?
             </h2>
             
             <div style={{
@@ -539,23 +533,23 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
             
             <p style={{
               color: 'rgba(0,0,0,0.7)',
-              fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)', // Smaller font
+              fontSize: 'clamp(0.85rem, 1.5vw, 0.95rem)',
               margin: '0',
               lineHeight: '1.5',
               fontWeight: '300',
               textAlign: 'center'
             }}>
-              Precision-crafted digital experiences
+              We build custom web applications, mobile apps,
               <br />
-              that set new industry standards.
+              and enterprise software solutions.
             </p>
           </motion.div>
         )}
 
-        {/* Minimal scroll indicator - moved up and smaller */}
+        {/* Scroll indicator - Updated text */}
         <motion.div
           style={{
-            marginTop: '40px', // Reduced from 120px
+            marginTop: '40px',
             cursor: 'pointer',
             display: 'flex',
             flexDirection: 'column',
@@ -571,14 +565,14 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
         >
           <div style={{
             width: '1px',
-            height: '25px', // Shorter line
+            height: '25px',
             background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.3), transparent)'
           }} />
           
           <motion.div
             style={{
               color: 'rgba(0,0,0,0.4)',
-              fontSize: '0.7rem', // Smaller font
+              fontSize: '0.7rem',
               fontWeight: '300',
               letterSpacing: '2px',
               textTransform: 'uppercase'
@@ -588,7 +582,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
             }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            EXPLORE
+            SEE WORK
           </motion.div>
         </motion.div>
       </motion.div>

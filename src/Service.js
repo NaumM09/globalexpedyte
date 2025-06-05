@@ -1,20 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Services = ({ setSelectedService, setCurrentSection }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [portfolioService, setPortfolioService] = useState(null);
-
-  // Auto-advance services every 6 seconds
-  useEffect(() => {
-    if (!showPortfolio) {
-      const interval = setInterval(() => {
-        setSelectedIndex(prev => (prev + 1) % servicesData.length);
-      }, 6000);
-      return () => clearInterval(interval);
-    }
-  }, [showPortfolio]);
 
   // Refined services data with minimal approach
   const servicesData = useMemo(() => [
@@ -184,11 +174,21 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
     }
   ], []);
 
+  // Auto-advance services every 6 seconds
+  useEffect(() => {
+    if (!showPortfolio) {
+      const interval = setInterval(() => {
+        setSelectedIndex(prev => (prev + 1) % servicesData.length);
+      }, 6000);
+      return () => clearInterval(interval);
+    }
+  }, [showPortfolio, servicesData.length]); // Fixed: Added servicesData.length to dependencies
+
   // Helper function to get brand color by index
-  const getBrandColor = (index) => {
+  const getBrandColor = useCallback((index) => {
     const colors = ['#ff3131', '#5ce1e6', '#43f8ac'];
     return colors[index % colors.length];
-  };
+  }, []);
 
   // Floating text marquee
   const FloatingMarquee = ({ text, direction = 1 }) => {
@@ -237,7 +237,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '40px'
+          padding: 'clamp(20px, 5vw, 40px)'
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -256,7 +256,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             maxHeight: '90vh',
             overflow: 'auto',
             position: 'relative',
-            boxShadow: '0 60px 120px rgba(0,0,0,0.1)'
+            boxShadow: '0 60px 120px rgba(0,0,0,0.1)',
+            margin: '0 auto'
           }}
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -265,7 +266,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
         >
           {/* Header */}
           <div style={{
-            padding: '60px 60px 40px',
+            padding: 'clamp(30px, 5vw, 60px) clamp(20px, 5vw, 60px) clamp(20px, 3vw, 40px)',
             borderBottom: '1px solid rgba(0,0,0,0.06)',
             position: 'relative'
           }}>
@@ -273,8 +274,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             <div style={{
               position: 'absolute',
               top: 0,
-              left: '60px',
-              right: '60px',
+              left: 'clamp(20px, 5vw, 60px)',
+              right: 'clamp(20px, 5vw, 60px)',
               height: '2px',
               background: 'linear-gradient(90deg, transparent, #5ce1e6, transparent)',
               opacity: 0.6
@@ -283,15 +284,15 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             <motion.button
               style={{
                 position: 'absolute',
-                top: '30px',
-                right: '30px',
+                top: 'clamp(15px, 3vw, 30px)',
+                right: 'clamp(15px, 3vw, 30px)',
                 background: 'transparent',
                 border: 'none',
-                fontSize: '1.5rem',
+                fontSize: 'clamp(1.2rem, 3vw, 1.5rem)',
                 cursor: 'pointer',
                 color: '#000',
-                width: '40px',
-                height: '40px',
+                width: 'clamp(30px, 5vw, 40px)',
+                height: 'clamp(30px, 5vw, 40px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
@@ -309,11 +310,11 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             <div style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '20px',
-              marginBottom: '30px'
+              gap: 'clamp(10px, 3vw, 20px)',
+              marginBottom: 'clamp(15px, 3vw, 30px)'
             }}>
               <span style={{
-                fontSize: '1rem',
+                fontSize: 'clamp(0.8rem, 2vw, 1rem)',
                 fontWeight: '300',
                 color: '#5ce1e6',
                 letterSpacing: '3px',
@@ -322,7 +323,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 {portfolioService.number}
               </span>
               <div style={{
-                width: '40px',
+                width: 'clamp(20px, 5vw, 40px)',
                 height: '2px',
                 background: 'linear-gradient(90deg, #ff3131, #43f8ac)',
                 opacity: 0.6
@@ -330,7 +331,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             </div>
 
             <h2 style={{
-              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              fontSize: 'clamp(1.5rem, 4vw, 3rem)',
               fontWeight: '200',
               color: '#000',
               margin: '0 0 15px 0',
@@ -341,7 +342,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
               {portfolioService.title}
               <br />
               <span style={{
-                fontSize: 'clamp(1rem, 2vw, 1.5rem)',
+                fontSize: 'clamp(0.8rem, 2vw, 1.5rem)',
                 opacity: 0.6,
                 fontWeight: '300',
                 color: '#ff3131'
@@ -352,7 +353,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
 
             <p style={{
               color: 'rgba(0,0,0,0.6)',
-              fontSize: '1.1rem',
+              fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
               margin: 0,
               lineHeight: '1.6',
               maxWidth: '600px',
@@ -364,10 +365,10 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
 
           {/* Portfolio Grid */}
           <div style={{
-            padding: '60px',
+            padding: 'clamp(30px, 5vw, 60px)',
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-            gap: '40px'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))',
+            gap: 'clamp(20px, 4vw, 40px)'
           }}>
             {portfolioService.portfolio.map((project, index) => (
               <motion.div
@@ -375,7 +376,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 style={{
                   background: '#fff',
                   border: '1px solid rgba(0,0,0,0.06)',
-                  padding: '40px',
+                  padding: 'clamp(20px, 4vw, 40px)',
                   position: 'relative',
                   cursor: 'pointer'
                 }}
@@ -387,8 +388,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 {/* Project Image */}
                 <div style={{
                   width: '100%',
-                  height: '200px',
-                  marginBottom: '25px',
+                  height: 'clamp(150px, 20vw, 200px)',
+                  marginBottom: 'clamp(15px, 3vw, 25px)',
                   borderRadius: '8px',
                   overflow: 'hidden',
                   position: 'relative'
@@ -422,21 +423,21 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 </div>
 
                 <div style={{
-                  fontSize: '0.8rem',
+                  fontSize: 'clamp(0.7rem, 1.5vw, 0.8rem)',
                   color: getBrandColor(index),
                   letterSpacing: '2px',
                   textTransform: 'uppercase',
-                  marginBottom: '15px',
+                  marginBottom: 'clamp(10px, 2vw, 15px)',
                   fontWeight: '400'
                 }}>
                   {project.type}
                 </div>
 
                 <h3 style={{
-                  fontSize: '1.4rem',
+                  fontSize: 'clamp(1.1rem, 2.5vw, 1.4rem)',
                   fontWeight: '300',
                   color: '#000',
-                  margin: '0 0 15px 0',
+                  margin: '0 0 clamp(10px, 2vw, 15px) 0',
                   lineHeight: '1.2',
                   fontFamily: 'system-ui, -apple-system, sans-serif'
                 }}>
@@ -445,8 +446,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
 
                 <p style={{
                   color: 'rgba(0,0,0,0.7)',
-                  fontSize: '1rem',
-                  margin: '0 0 30px 0',
+                  fontSize: 'clamp(0.8rem, 2vw, 1rem)',
+                  margin: '0 0 clamp(20px, 3vw, 30px) 0',
                   lineHeight: '1.6',
                   fontWeight: '300'
                 }}>
@@ -457,18 +458,18 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '8px'
+                  gap: 'clamp(6px, 1.5vw, 8px)'
                 }}>
                   {project.metrics.map((metric, idx) => (
                     <div
                       key={idx}
                       style={{
-                        fontSize: '0.8rem',
+                        fontSize: 'clamp(0.7rem, 1.5vw, 0.8rem)',
                         color: 'rgba(0,0,0,0.5)',
                         textTransform: 'uppercase',
                         letterSpacing: '1px',
                         position: 'relative',
-                        paddingLeft: '15px',
+                        paddingLeft: 'clamp(12px, 2vw, 15px)',
                         fontWeight: '300'
                       }}
                     >
@@ -491,8 +492,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 <div style={{
                   position: 'absolute',
                   bottom: 0,
-                  left: '40px',
-                  right: '40px',
+                  left: 'clamp(20px, 4vw, 40px)',
+                  right: 'clamp(20px, 4vw, 40px)',
                   height: '2px',
                   background: `linear-gradient(90deg, transparent, ${getBrandColor(index)}, transparent)`,
                   opacity: 0.3
@@ -503,7 +504,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
 
           {/* Footer CTA */}
           <div style={{
-            padding: '40px 60px 60px',
+            padding: 'clamp(20px, 4vw, 40px) clamp(30px, 5vw, 60px) clamp(30px, 5vw, 60px)',
             borderTop: '1px solid rgba(0,0,0,0.06)',
             textAlign: 'center'
           }}>
@@ -512,8 +513,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 background: 'linear-gradient(135deg, #ff3131, #5ce1e6)',
                 border: 'none',
                 color: '#fff',
-                padding: '20px 50px',
-                fontSize: '0.9rem',
+                padding: 'clamp(15px, 3vw, 20px) clamp(30px, 5vw, 50px)',
+                fontSize: 'clamp(0.8rem, 2vw, 0.9rem)',
                 fontWeight: '400',
                 cursor: 'pointer',
                 letterSpacing: '2px',
@@ -537,22 +538,22 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
     );
   };
 
-  // Service showcase component - FIXED VERSION
+  // Service showcase component
   const ServiceShowcase = ({ service, index, isActive }) => (
     <AnimatePresence mode="wait">
       {isActive && (
         <motion.div
           key={`service-${index}`}
           style={{
-            position: 'relative', // Changed from absolute
+            position: 'relative',
             width: '100%',
             height: '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
-            padding: '0 60px',
+            padding: '0 clamp(20px, 5vw, 60px)',
             overflow: 'hidden',
-            minHeight: '80vh' // Ensure sufficient height
+            minHeight: '80vh'
           }}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -560,7 +561,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
           transition={{ 
             duration: 0.8, 
             ease: [0.23, 1, 0.32, 1],
-            type: "tween" // Use tween for smoother transitions
+            type: "tween"
           }}
         >
           {/* Left Content */}
@@ -568,8 +569,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             style={{
               flex: 1,
               maxWidth: '600px',
-              paddingRight: '80px',
-              paddingTop: '60px' // Reduced padding to avoid header overlap
+              paddingRight: 'clamp(20px, 5vw, 80px)',
+              paddingTop: 'clamp(40px, 8vh, 60px)'
             }}
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -584,15 +585,15 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '20px',
-                marginBottom: '30px'
+                gap: 'clamp(10px, 3vw, 20px)',
+                marginBottom: 'clamp(20px, 4vw, 30px)'
               }}
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
               <span style={{
-                fontSize: '1rem',
+                fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
                 fontWeight: '300',
                 color: '#5ce1e6',
                 letterSpacing: '3px',
@@ -601,7 +602,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 {service.number}
               </span>
               <div style={{
-                width: '60px',
+                width: 'clamp(30px, 8vw, 60px)',
                 height: '2px',
                 background: 'linear-gradient(90deg, #ff3131, #5ce1e6, #43f8ac)',
                 opacity: 0.6
@@ -610,14 +611,14 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
 
             <motion.h2 
               style={{
-                fontSize: 'clamp(3rem, 6vw, 5rem)',
+                fontSize: 'clamp(2rem, 6vw, 5rem)',
                 fontWeight: '200',
                 color: '#000',
                 margin: '0 0 15px 0',
                 letterSpacing: '-2px',
                 lineHeight: '0.9',
                 fontFamily: 'system-ui, -apple-system, sans-serif',
-                overflow: 'hidden' // Prevent text overflow
+                overflow: 'hidden'
               }}
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -628,11 +629,11 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
 
             <motion.p 
               style={{
-                fontSize: '0.9rem',
+                fontSize: 'clamp(0.7rem, 1.5vw, 0.9rem)',
                 color: getBrandColor(index),
                 letterSpacing: '2px',
                 textTransform: 'uppercase',
-                marginBottom: '40px',
+                marginBottom: 'clamp(20px, 4vw, 40px)',
                 fontWeight: '400'
               }}
               initial={{ opacity: 0 }}
@@ -644,10 +645,10 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
 
             <motion.p 
               style={{
-                fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
+                fontSize: 'clamp(1rem, 2vw, 1.4rem)',
                 color: 'rgba(0,0,0,0.8)',
                 lineHeight: '1.7',
-                marginBottom: '50px',
+                marginBottom: 'clamp(30px, 5vw, 50px)',
                 fontWeight: '300',
                 maxWidth: '500px'
               }}
@@ -661,18 +662,18 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             {/* Technical specifications */}
             <motion.div
               style={{
-                marginBottom: '60px'
+                marginBottom: 'clamp(30px, 5vw, 60px)'
               }}
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.6 }}
             >
               <h4 style={{
-                fontSize: '0.8rem',
+                fontSize: 'clamp(0.7rem, 1.2vw, 0.8rem)',
                 color: 'rgba(0,0,0,0.4)',
                 letterSpacing: '2px',
                 textTransform: 'uppercase',
-                marginBottom: '25px',
+                marginBottom: 'clamp(15px, 3vw, 25px)',
                 fontWeight: '400',
                 position: 'relative'
               }}>
@@ -692,14 +693,14 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
               
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(2, 1fr)',
-                gap: '20px'
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: 'clamp(15px, 3vw, 20px)'
               }}>
                 {service.technicalSpecs.map((spec, idx) => (
                   <motion.div
                     key={idx}
                     style={{
-                      fontSize: '1rem',
+                      fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
                       color: 'rgba(0,0,0,0.7)',
                       fontWeight: '300',
                       position: 'relative',
@@ -730,7 +731,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             <motion.div
               style={{
                 display: 'flex',
-                gap: '25px',
+                gap: 'clamp(15px, 3vw, 25px)',
                 flexWrap: 'wrap'
               }}
               initial={{ y: 20, opacity: 0 }}
@@ -742,8 +743,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                   background: 'linear-gradient(135deg, #ff3131, #5ce1e6)',
                   border: 'none',
                   color: '#fff',
-                  padding: '18px 40px',
-                  fontSize: '0.9rem',
+                  padding: 'clamp(15px, 2.5vw, 18px) clamp(25px, 4vw, 40px)',
+                  fontSize: 'clamp(0.7rem, 1.5vw, 0.9rem)',
                   fontWeight: '400',
                   cursor: 'pointer',
                   letterSpacing: '1px',
@@ -752,7 +753,6 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                   position: 'relative',
                   overflow: 'hidden'
                 }}
-                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   setSelectedService && setSelectedService(service.service);
@@ -779,8 +779,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                   background: 'transparent',
                   border: `1px solid ${getBrandColor(index)}`,
                   color: getBrandColor(index),
-                  padding: '18px 40px',
-                  fontSize: '0.9rem',
+                  padding: 'clamp(15px, 2.5vw, 18px) clamp(25px, 4vw, 40px)',
+                  fontSize: 'clamp(0.7rem, 1.5vw, 0.9rem)',
                   fontWeight: '400',
                   cursor: 'pointer',
                   letterSpacing: '1px',
@@ -806,9 +806,10 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
           <motion.div
             style={{
               flex: 1,
-              maxWidth: '500px',
-              height: '400px',
-              position: 'relative'
+              maxWidth: 'clamp(300px, 40vw, 500px)',
+              height: 'clamp(300px, 40vh, 400px)',
+              position: 'relative',
+              display: window.innerWidth < 768 ? 'none' : 'block' // Hide on mobile
             }}
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -868,7 +869,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 </div>
                 
                 <div style={{
-                  fontSize: '0.8rem',
+                  fontSize: 'clamp(0.6rem, 1.2vw, 0.8rem)',
                   color: getBrandColor(index),
                   letterSpacing: '1px',
                   textTransform: 'uppercase',
@@ -883,7 +884,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
 
               {/* Content area */}
               <div style={{
-                padding: '40px',
+                padding: 'clamp(20px, 4vw, 40px)',
                 height: 'calc(100% - 50px)',
                 display: 'flex',
                 flexDirection: 'column',
@@ -897,8 +898,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                     position: 'absolute',
                     top: '15%',
                     right: '10%',
-                    width: '160px',
-                    height: '100px',
+                    width: 'clamp(100px, 20vw, 160px)',
+                    height: 'clamp(60px, 12vw, 100px)',
                     background: `${getBrandColor(index)}08`,
                     border: `1px solid ${getBrandColor(index)}20`,
                     borderRadius: '8px'
@@ -945,7 +946,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 {/* Main content */}
                 <div style={{ zIndex: 1 }}>
                   <h3 style={{
-                    fontSize: '1.6rem',
+                    fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)',
                     fontWeight: '300',
                     color: '#000',
                     marginBottom: '15px',
@@ -958,7 +959,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                   </h3>
                   
                   <p style={{
-                    fontSize: '1rem',
+                    fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
                     color: 'rgba(0,0,0,0.6)',
                     marginBottom: '30px',
                     lineHeight: '1.6',
@@ -977,7 +978,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                   }}>
                     {service.showcase.metrics.map((metric, idx) => (
                       <div key={idx} style={{
-                        fontSize: '0.8rem',
+                        fontSize: 'clamp(0.6rem, 1.2vw, 0.8rem)',
                         color: 'rgba(0,0,0,0.4)',
                         textTransform: 'uppercase',
                         letterSpacing: '1px',
@@ -1037,8 +1038,8 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
       <motion.div
         style={{
           position: 'absolute',
-          top: '80px',
-          left: '60px',
+          top: 'clamp(40px, 8vh, 80px)',
+          left: 'clamp(20px, 5vw, 60px)',
           zIndex: 10,
           maxWidth: '400px'
         }}
@@ -1048,11 +1049,11 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
       >
         <motion.div
           style={{
-            fontSize: '0.8rem',
+            fontSize: 'clamp(0.6rem, 1.2vw, 0.8rem)',
             color: 'rgba(0,0,0,0.4)',
             letterSpacing: '3px',
             textTransform: 'uppercase',
-            marginBottom: '20px',
+            marginBottom: 'clamp(10px, 3vw, 20px)',
             fontWeight: '300',
             position: 'relative'
           }}
@@ -1070,30 +1071,19 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
           }} />
           Services Portfolio
         </motion.div>
-        
-        <h1 style={{
-          fontSize: 'clamp(2rem, 4vw, 3rem)',
-          fontWeight: '200',
-          color: '#000',
-          margin: 0,
-          letterSpacing: '-1px',
-          fontFamily: 'system-ui, -apple-system, sans-serif',
-          lineHeight: '1.1'
-        }}>
-        </h1>
       </motion.div>
 
       {/* Navigation dots */}
       <motion.div
         style={{
           position: 'fixed',
-          right: '40px',
+          right: 'clamp(20px, 4vw, 40px)',
           top: '50%',
           transform: 'translateY(-50%)',
           zIndex: 20,
           display: 'flex',
           flexDirection: 'column',
-          gap: '15px'
+          gap: 'clamp(10px, 2vw, 15px)'
         }}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -1103,7 +1093,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
           <motion.button
             key={index}
             style={{
-              width: selectedIndex === index ? '30px' : '15px',
+              width: selectedIndex === index ? 'clamp(20px, 4vw, 30px)' : 'clamp(10px, 2vw, 15px)',
               height: '2px',
               background: selectedIndex === index 
                 ? getBrandColor(index)
@@ -1114,7 +1104,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             }}
             onClick={() => setSelectedIndex(index)}
             whileHover={{ 
-              width: '30px', 
+              width: 'clamp(20px, 4vw, 30px)', 
               backgroundColor: getBrandColor(index)
             }}
           />
@@ -1125,19 +1115,19 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
       <motion.div
         style={{
           position: 'absolute',
-          bottom: '60px',
-          left: '60px',
+          bottom: 'clamp(20px, 8vh, 60px)',
+          left: 'clamp(20px, 5vw, 60px)',
           zIndex: 10,
           display: 'flex',
           alignItems: 'center',
-          gap: '25px'
+          gap: 'clamp(15px, 3vw, 25px)'
         }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.8 }}
       >
         <span style={{
-          fontSize: '2.5rem',
+          fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
           fontWeight: '200',
           color: '#000',
           fontFamily: 'system-ui, -apple-system, sans-serif'
@@ -1147,14 +1137,14 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
         
         <div>
           <div style={{
-            width: '30px',
+            width: 'clamp(20px, 4vw, 30px)',
             height: '2px',
             background: `linear-gradient(90deg, ${getBrandColor(selectedIndex)}, ${getBrandColor((selectedIndex + 1) % 3)})`,
             marginBottom: '8px',
             opacity: 0.8
           }} />
           <span style={{
-            fontSize: '0.8rem',
+            fontSize: 'clamp(0.6rem, 1.5vw, 0.8rem)',
             color: 'rgba(0,0,0,0.4)',
             letterSpacing: '2px',
             textTransform: 'uppercase'
@@ -1168,11 +1158,11 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
       <motion.div
         style={{
           position: 'absolute',
-          bottom: '60px',
-          right: '60px',
+          bottom: 'clamp(20px, 8vh, 60px)',
+          right: 'clamp(20px, 5vw, 60px)',
           zIndex: 10,
           display: 'flex',
-          gap: '15px'
+          gap: 'clamp(10px, 2vw, 15px)'
         }}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -1180,15 +1170,15 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
       >
         <motion.button
           style={{
-            width: '45px',
-            height: '45px',
+            width: 'clamp(35px, 6vw, 45px)',
+            height: 'clamp(35px, 6vw, 45px)',
             border: `1px solid ${selectedIndex === 0 ? 'rgba(0,0,0,0.1)' : getBrandColor(selectedIndex)}40`,
             background: 'transparent',
             cursor: selectedIndex === 0 ? 'not-allowed' : 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '1.2rem',
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
             color: selectedIndex === 0 ? 'rgba(0,0,0,0.3)' : getBrandColor(selectedIndex)
           }}
           disabled={selectedIndex === 0}
@@ -1204,15 +1194,15 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
         
         <motion.button
           style={{
-            width: '45px',
-            height: '45px',
+            width: 'clamp(35px, 6vw, 45px)',
+            height: 'clamp(35px, 6vw, 45px)',
             border: `1px solid ${selectedIndex === servicesData.length - 1 ? 'rgba(0,0,0,0.1)' : getBrandColor(selectedIndex)}40`,
             background: 'transparent',
             cursor: selectedIndex === servicesData.length - 1 ? 'not-allowed' : 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '1.2rem',
+            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
             color: selectedIndex === servicesData.length - 1 ? 'rgba(0,0,0,0.3)' : getBrandColor(selectedIndex)
           }}
           disabled={selectedIndex === servicesData.length - 1}
@@ -1227,16 +1217,16 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
         </motion.button>
       </motion.div>
 
-      {/* Main content area - Fixed container */}
+      {/* Main content area */}
       <div style={{
         position: 'relative',
         minHeight: '80vh',
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        width: '100%'
+        width: '100%',
+        paddingBottom: 'clamp(100px, 15vh, 160px)'
       }}>
-        {/* Single active service display */}
         <div style={{ width: '100%', height: '100%' }}>
           {servicesData.map((service, index) => (
             selectedIndex === index && (
