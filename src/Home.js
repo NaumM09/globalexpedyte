@@ -17,7 +17,7 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
       { text: "A WEBSITE?", color: "#ff3131" },
       { text: "A NEW LOGO?", color: "#5ce1e6" },
       { text: "BUSINESS EMAIL?", color: "#43f8ac" },
-      { text: "PRODUCT DESIGN?", color: "#ff3131" }
+      { text: "SOCIAL MEDIA MANAGER?", color: "#ff3131" }
     ];
 
     useEffect(() => {
@@ -62,9 +62,10 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
     );
   };
 
-  // Minimal geometric logo
+  // Company logo with actual image
   const GeometricLogo = () => {
     const [isHovered, setIsHovered] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
     
     return (
       <motion.div 
@@ -78,12 +79,14 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
       >
         <motion.div
           style={{
-            width: '60px',
-            height: '60px',
-            background: '#000',
+            width: '80px',
+            height: '80px',
             margin: '0 auto',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -91,26 +94,60 @@ const Home = ({ qrSource = 'direct', setCurrentSection }) => {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
         >
-          {/* Inner geometric shape */}
-          <motion.div
+          {/* Actual logo image */}
+          <img
+            src="https://i.ibb.co/bjWCDQqs/logo5-1.png"
+            alt="Global Expedyte Logo"
             style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '30px',
-              height: '30px',
-              background: isHovered ? '#000' : '#fff',
-              transform: 'translate(-50%, -50%) rotate(45deg)',
-              transition: 'all 0.3s ease'
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              transition: 'all 0.3s ease',
+              opacity: imageLoaded ? 1 : 0
+            }}
+            onLoad={() => setImageLoaded(true)}
+            onError={(e) => {
+              console.log('Logo failed to load, using fallback');
+              e.target.style.display = 'none';
             }}
           />
           
-          {/* Outer frame animation */}
+          {/* Fallback geometric logo */}
+          {!imageLoaded && (
+            <motion.div
+              style={{
+                width: '60px',
+                height: '60px',
+                background: '#000',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              <motion.div
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  width: '30px',
+                  height: '30px',
+                  background: isHovered ? '#000' : '#fff',
+                  transform: 'translate(-50%, -50%) rotate(45deg)',
+                  transition: 'all 0.3s ease'
+                }}
+              />
+            </motion.div>
+          )}
+          
+          {/* Hover effect ring */}
           <motion.div
             style={{
               position: 'absolute',
               inset: '-2px',
-              background: 'linear-gradient(45deg, transparent, #fff, transparent)',
+              border: '2px solid transparent',
+              borderRadius: '50%',
+              background: `linear-gradient(45deg, #ff3131, #5ce1e6, #43f8ac) border-box`,
+              mask: 'linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)',
+              maskComposite: 'exclude',
               opacity: isHovered ? 1 : 0,
               transition: 'opacity 0.3s ease'
             }}
