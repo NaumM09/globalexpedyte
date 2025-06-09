@@ -6,18 +6,18 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
   const [showPortfolio, setShowPortfolio] = useState(false);
   const [portfolioService, setPortfolioService] = useState(null);
 
-  // Refined services data with minimal approach
+  // Services data with job requirement specs and updated descriptions
   const servicesData = useMemo(() => [
     {
       number: "01",
       title: "Digital Architecture",
       subtitle: "WEB DESIGN & DEVELOPMENT",
-      description: "Precision-engineered digital experiences that perform as beautifully as they appear. Every interaction serves a purpose.",
+      description: "Full-stack development expertise with modern frameworks and cloud infrastructure. Building scalable, high-performance web applications that drive business growth.",
       technicalSpecs: [
-        "Mobile-First Engineering",
-        "Performance Optimization", 
-        "Conversion Architecture",
-        "SEO Foundation"
+        "React.js & Next.js Development",
+        "Node.js & Express Backend", 
+        "AWS & Docker Deployment",
+        "TypeScript & GraphQL APIs"
       ],
       service: "web-design",
       showcase: {
@@ -27,7 +27,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
       },
       portfolio: [
         {
-          title: "FinTech Dashboard",
+          title: "NATS Pets Courier",
           type: "Web Application",
           description: "Real-time trading interface with advanced analytics",
           image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop&auto=format",
@@ -52,13 +52,13 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
     {
       number: "02", 
       title: "System Engineering",
-      subtitle: "SOFTWARE DEVELOPMENT",
-      description: "Scalable architectures built to withstand growth. Clean code that commits to excellence, not technical debt.",
+      subtitle: "BACKEND & MOBILE DEVELOPMENT",
+      description: "Enterprise-grade software architecture with microservices, CI/CD pipelines, and cross-platform mobile solutions. Expert in distributed systems and API design.",
       technicalSpecs: [
-        "Scalable Infrastructure",
-        "Clean Architecture",
-        "Future-Proof Design",
-        "Zero-Downtime Deployment"
+        "Python & Java Microservices",
+        "Kubernetes & DevOps",
+        "React Native & Flutter",
+        "PostgreSQL & Redis Optimization"
       ],
       service: "software-engineering",
       showcase: {
@@ -93,19 +93,19 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
     {
       number: "03",
       title: "Brand Systems",
-      subtitle: "IDENTITY & STRATEGY", 
-      description: "Cohesive visual languages that speak before words. Brand systems engineered for recognition and recall.",
+      subtitle: "DIGITAL MARKETING & ANALYTICS", 
+      description: "Data-driven brand strategies with advanced analytics implementation. Specializing in conversion tracking, user behavior analysis, and performance marketing optimization.",
       technicalSpecs: [
-        "Visual Identity Systems",
-        "Brand Architecture",
-        "Recognition Engineering",
-        "Cross-Platform Consistency"
+        "Google Analytics 4 & GTM",
+        "TikTok Pixel & Facebook Ads",
+        "Hotjar & Mixpanel Integration",
+        "A/B Testing & CRO Strategies"
       ],
       service: "branding",
       showcase: {
-        title: "Corporate Identity System",
-        description: "Complete brand ecosystem designed for global deployment",
-        metrics: ["15+ Touchpoints", "Brand Recognition +80%", "Market Presence"]
+        title: "Social Media Analytics Dashboard",
+        description: "Real-time performance insights driving brand strategy",
+        metrics: ["432K Views", "7.6K Profile Visits", "12K Engagement"]
       },
       portfolio: [
         {
@@ -134,13 +134,13 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
     {
       number: "04",
       title: "Custom Solutions",
-      subtitle: "BESPOKE DESIGN",
-      description: "One-of-one solutions for unique challenges. Where templates end, our engineering begins.",
+      subtitle: "AI & DATA SCIENCE",
+      description: "Machine learning models, AI automation, and custom data pipelines. Building intelligent systems that scale with advanced MLOps and real-time processing capabilities.",
       technicalSpecs: [
-        "Bespoke Engineering",
-        "Custom Methodologies",
-        "Unique Problem Solving",
-        "Proprietary Solutions"
+        "TensorFlow & PyTorch Models",
+        "Apache Kafka & Spark",
+        "MLOps & Model Deployment",
+        "Computer Vision & NLP"
       ],
       service: "custom-design",
       showcase: {
@@ -182,7 +182,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
       }, 6000);
       return () => clearInterval(interval);
     }
-  }, [showPortfolio, servicesData.length]); // Fixed: Added servicesData.length to dependencies
+  }, [showPortfolio, servicesData.length]);
 
   // Helper function to get brand color by index
   const getBrandColor = useCallback((index) => {
@@ -215,6 +215,284 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
         }}
       >
         {Array.from({ length: 10 }, (_, i) => `${text} • `).join('')}
+      </motion.div>
+    );
+  };
+
+  // Social Media Analytics Component
+  // eslint-disable-next-line
+  const SocialMediaAnalytics = () => {
+    const [animateMetrics, setAnimateMetrics] = useState(false);
+
+    useEffect(() => {
+      const timer = setTimeout(() => setAnimateMetrics(true), 500);
+      return () => clearTimeout(timer);
+    }, []);
+
+    return (
+      <motion.div
+        style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          borderRadius: '16px',
+          padding: '30px',
+          color: 'white',
+          position: 'relative',
+          overflow: 'hidden',
+          minHeight: '500px'
+        }}
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Background pattern */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `
+            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '20px 20px',
+          opacity: 0.3
+        }} />
+
+        <motion.div
+          style={{ position: 'relative', zIndex: 1 }}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+        >
+          <div style={{
+            textAlign: 'center',
+            marginBottom: '30px'
+          }}>
+            <h3 style={{
+              fontSize: '1.8rem',
+              fontWeight: '600',
+              margin: '0 0 10px 0',
+              background: 'linear-gradient(135deg, #fff, #f0f0f0)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
+            }}>
+              Social Media Analytics
+            </h3>
+            <p style={{
+              fontSize: '0.9rem',
+              opacity: 0.8,
+              margin: 0
+            }}>
+              365 Days Performance • Mar 31, 2024 - Mar 30, 2025
+            </p>
+          </div>
+
+          {/* Metrics Grid */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+            gap: '20px',
+            marginBottom: '30px'
+          }}>
+            {[
+              { value: '432K', label: 'Post Views', featured: true },
+              { value: '7,686', label: 'Profile Views' },
+              { value: '12K', label: 'Likes' },
+              { value: '524', label: 'Comments' },
+              { value: '545', label: 'Shares' },
+              { value: '7,461', label: 'Peak Daily' }
+            ].map((metric, index) => (
+              <motion.div
+                key={index}
+                style={{
+                  background: metric.featured 
+                    ? 'rgba(255,255,255,0.2)' 
+                    : 'rgba(255,255,255,0.1)',
+                  backdropFilter: 'blur(10px)',
+                  borderRadius: '12px',
+                  padding: '20px 15px',
+                  textAlign: 'center',
+                  border: metric.featured 
+                    ? '1px solid rgba(255,255,255,0.3)' 
+                    : '1px solid rgba(255,255,255,0.1)',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3 + (index * 0.1), duration: 0.5 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+              >
+                {metric.featured && (
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '3px',
+                    background: 'linear-gradient(90deg, #fff, #f0f0f0)'
+                  }} />
+                )}
+                
+                <motion.div
+                  style={{
+                    fontSize: metric.featured ? '2rem' : '1.5rem',
+                    fontWeight: '700',
+                    marginBottom: '5px'
+                  }}
+                  animate={animateMetrics ? { scale: [1, 1.1, 1] } : {}}
+                  transition={{ 
+                    delay: 0.5 + (index * 0.1), 
+                    duration: 0.5,
+                    ease: "easeOut"
+                  }}
+                >
+                  {metric.value}
+                </motion.div>
+                
+                <div style={{
+                  fontSize: '0.7rem',
+                  opacity: 0.9,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.5px',
+                  fontWeight: '500'
+                }}>
+                  {metric.label}
+                </div>
+
+                {metric.featured && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '-5px',
+                    right: '-5px',
+                    fontSize: '1.2rem'
+                  }}>
+                    🔥
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Chart Visualization */}
+          <motion.div
+            style={{
+              background: 'rgba(255,255,255,0.1)',
+              borderRadius: '12px',
+              padding: '20px',
+              marginBottom: '20px'
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+          >
+            <h4 style={{
+              fontSize: '1rem',
+              fontWeight: '600',
+              marginBottom: '15px',
+              opacity: 0.9
+            }}>
+              Growth Trajectory
+            </h4>
+            
+            <div style={{
+              height: '100px',
+              display: 'flex',
+              alignItems: 'flex-end',
+              gap: '3px',
+              padding: '10px 0'
+            }}>
+              {[15, 20, 25, 30, 45, 55, 70, 85, 95, 90, 75, 80, 85, 92, 88, 78, 82, 90].map((height, index) => (
+                <motion.div
+                  key={index}
+                  style={{
+                    flex: 1,
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.8), rgba(255,255,255,0.4))',
+                    borderRadius: '2px 2px 0 0',
+                    minHeight: '5px'
+                  }}
+                  initial={{ height: '5px' }}
+                  animate={{ height: `${height}%` }}
+                  transition={{ 
+                    delay: 1 + (index * 0.05), 
+                    duration: 0.5,
+                    ease: "easeOut"
+                  }}
+                  whileHover={{ 
+                    background: 'linear-gradient(135deg, rgba(255,255,255,1), rgba(255,255,255,0.6))',
+                    scale: [1, 1.1, 1]
+                  }}
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Traffic Sources */}
+          <motion.div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '15px'
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+          >
+            {[
+              { name: 'For You Page', percentage: 64.9 },
+              { name: 'Personal Profile', percentage: 18.9 }
+            ].map((source, index) => (
+              <div
+                key={index}
+                style={{
+                  background: 'rgba(255,255,255,0.1)',
+                  borderRadius: '8px',
+                  padding: '15px'
+                }}
+              >
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: '10px'
+                }}>
+                  <span style={{
+                    fontSize: '0.9rem',
+                    fontWeight: '500'
+                  }}>
+                    {source.name}
+                  </span>
+                  <span style={{
+                    fontSize: '1.1rem',
+                    fontWeight: '700'
+                  }}>
+                    {source.percentage}%
+                  </span>
+                </div>
+                
+                <div style={{
+                  height: '6px',
+                  background: 'rgba(255,255,255,0.2)',
+                  borderRadius: '3px',
+                  overflow: 'hidden'
+                }}>
+                  <motion.div
+                    style={{
+                      height: '100%',
+                      background: 'linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6))',
+                      borderRadius: '3px'
+                    }}
+                    initial={{ width: '0%' }}
+                    animate={{ width: `${source.percentage}%` }}
+                    transition={{ 
+                      delay: 1.4 + (index * 0.2), 
+                      duration: 1,
+                      ease: "easeOut"
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
       </motion.div>
     );
   };
@@ -385,7 +663,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
               >
-                {/* Project Image */}
+                {/* Standard portfolio item rendering */}
                 <div style={{
                   width: '100%',
                   height: 'clamp(150px, 20vw, 200px)',
@@ -538,7 +816,7 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
     );
   };
 
-  // Service showcase component
+  // Service showcase component with updated Brand Systems showcase
   const ServiceShowcase = ({ service, index, isActive }) => (
     <AnimatePresence mode="wait">
       {isActive && (
@@ -802,14 +1080,14 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
             </motion.div>
           </motion.div>
 
-          {/* Right Showcase */}
+          {/* Right Showcase - Special handling for Brand Systems */}
           <motion.div
             style={{
               flex: 1,
               maxWidth: 'clamp(300px, 40vw, 500px)',
               height: 'clamp(300px, 40vh, 400px)',
               position: 'relative',
-              display: window.innerWidth < 768 ? 'none' : 'block' // Hide on mobile
+              display: window.innerWidth < 768 ? 'none' : 'block'
             }}
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -820,191 +1098,361 @@ const Services = ({ setSelectedService, setCurrentSection }) => {
               ease: [0.23, 1, 0.32, 1]
             }}
           >
-            {/* Main showcase container */}
-            <motion.div
-              style={{
-                width: '100%',
-                height: '100%',
-                background: '#fff',
-                border: `1px solid ${getBrandColor(index)}20`,
-                position: 'relative',
-                overflow: 'hidden',
-                boxShadow: '0 40px 80px rgba(0,0,0,0.08)'
-              }}
-              animate={{
-                y: [0, -5, 0]
-              }}
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              {/* Header bar */}
-              <div style={{
-                height: '50px',
-                background: `${getBrandColor(index)}08`,
-                borderBottom: `1px solid ${getBrandColor(index)}20`,
-                display: 'flex',
-                alignItems: 'center',
-                padding: '0 25px',
-                justifyContent: 'space-between'
-              }}>
-                <div style={{
-                  display: 'flex',
-                  gap: '6px'
-                }}>
-                  {[0, 1, 2].map((dotIndex) => (
-                    <div
-                      key={dotIndex}
-                      style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        background: getBrandColor(dotIndex),
-                        opacity: 0.4
-                      }}
-                    />
-                  ))}
-                </div>
-                
-                <div style={{
-                  fontSize: 'clamp(0.6rem, 1.2vw, 0.8rem)',
-                  color: getBrandColor(index),
-                  letterSpacing: '1px',
-                  textTransform: 'uppercase',
-                  fontWeight: '400',
+            {/* Brand Systems gets the analytics preview */}
+            {service.title === "Brand Systems" ? (
+              <motion.div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  borderRadius: '16px',
+                  padding: '20px',
+                  position: 'relative',
                   overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap'
+                  boxShadow: '0 40px 80px rgba(0,0,0,0.08)'
+                }}
+                animate={{
+                  y: [0, -5, 0]
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                {/* Mini analytics preview */}
+                <div style={{
+                  color: 'white',
+                  height: '100%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
                 }}>
-                  {service.showcase.title}
-                </div>
-              </div>
+                  <div>
+                    <h3 style={{
+                      fontSize: '1.2rem',
+                      fontWeight: '600',
+                      margin: '0 0 15px 0',
+                      opacity: 0.9
+                    }}>
+                      Social Analytics
+                    </h3>
+                    
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(2, 1fr)',
+                      gap: '10px',
+                      marginBottom: '20px'
+                    }}>
+                      {[
+                        { value: '432K', label: 'Views' },
+                        { value: '12K', label: 'Likes' },
+                        { value: '7.6K', label: 'Profile' },
+                        { value: '524', label: 'Comments' }
+                      ].map((metric, idx) => (
+                        <motion.div
+                          key={idx}
+                          style={{
+                            background: 'rgba(255,255,255,0.15)',
+                            borderRadius: '8px',
+                            padding: '12px 8px',
+                            textAlign: 'center',
+                            backdropFilter: 'blur(10px)'
+                          }}
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ delay: idx * 0.1, duration: 0.5 }}
+                        >
+                          <div style={{
+                            fontSize: '1.1rem',
+                            fontWeight: '700',
+                            marginBottom: '3px'
+                          }}>
+                            {metric.value}
+                          </div>
+                          <div style={{
+                            fontSize: '0.6rem',
+                            opacity: 0.8,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px'
+                          }}>
+                            {metric.label}
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Content area */}
-              <div style={{
-                padding: 'clamp(20px, 4vw, 40px)',
-                height: 'calc(100% - 50px)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
-                {/* Geometric design elements */}
+                  {/* Mini chart */}
+                  <div style={{
+                    background: 'rgba(255,255,255,0.1)',
+                    borderRadius: '8px',
+                    padding: '15px',
+                    height: '80px'
+                  }}>
+                    <div style={{
+                      fontSize: '0.8rem',
+                      marginBottom: '10px',
+                      opacity: 0.9
+                    }}>
+                      Growth Trend
+                    </div>
+                    <div style={{
+                      height: '40px',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      gap: '2px'
+                    }}>
+                      {[30, 45, 60, 75, 90, 85, 95, 88, 92].map((height, idx) => (
+                        <motion.div
+                          key={idx}
+                          style={{
+                            flex: 1,
+                            background: 'rgba(255,255,255,0.6)',
+                            borderRadius: '1px',
+                            minHeight: '3px'
+                          }}
+                          initial={{ height: '3px' }}
+                          animate={{ height: `${height}%` }}
+                          transition={{ 
+                            delay: 0.5 + (idx * 0.05), 
+                            duration: 0.3 
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating elements */}
                 <motion.div
                   style={{
                     position: 'absolute',
-                    top: '15%',
-                    right: '10%',
-                    width: 'clamp(100px, 20vw, 160px)',
-                    height: 'clamp(60px, 12vw, 100px)',
-                    background: `${getBrandColor(index)}08`,
-                    border: `1px solid ${getBrandColor(index)}20`,
-                    borderRadius: '8px'
+                    top: '10px',
+                    right: '10px',
+                    width: '20px',
+                    height: '20px',
+                    background: 'rgba(255,255,255,0.2)',
+                    borderRadius: '50%'
                   }}
                   animate={{
-                    y: [0, -8, 0]
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 1, 0.5]
                   }}
                   transition={{
-                    duration: 4,
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <motion.div
+                  style={{
+                    position: 'absolute',
+                    bottom: '15px',
+                    left: '15px',
+                    fontSize: '0.7rem',
+                    opacity: 0.7
+                  }}
+                  animate={{
+                    opacity: [0.7, 1, 0.7]
+                  }}
+                  transition={{
+                    duration: 3,
                     repeat: Infinity,
                     ease: "easeInOut"
                   }}
                 >
-                  {/* Inner elements */}
-                  <div style={{
-                    position: 'absolute',
-                    top: '15px',
-                    left: '15px',
-                    right: '15px',
-                    height: '2px',
-                    background: `${getBrandColor(index)}40`
-                  }} />
-                  
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '15px',
-                    left: '15px',
-                    width: '60px',
-                    height: '2px',
-                    background: getBrandColor(index),
-                    opacity: 0.6
-                  }} />
-                  
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '25px',
-                    left: '15px',
-                    width: '80px',
-                    height: '1px',
-                    background: `${getBrandColor(index)}60`
-                  }} />
+                  Live Analytics
                 </motion.div>
-
-                {/* Main content */}
-                <div style={{ zIndex: 1 }}>
-                  <h3 style={{
-                    fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)',
-                    fontWeight: '300',
-                    color: '#000',
-                    marginBottom: '15px',
-                    lineHeight: '1.2',
-                    fontFamily: 'system-ui, -apple-system, sans-serif',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis'
-                  }}>
-                    {service.showcase.title}
-                  </h3>
-                  
-                  <p style={{
-                    fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
-                    color: 'rgba(0,0,0,0.6)',
-                    marginBottom: '30px',
-                    lineHeight: '1.6',
-                    maxWidth: '250px',
-                    fontWeight: '300',
-                    overflow: 'hidden'
-                  }}>
-                    {service.showcase.description}
-                  </p>
-
-                  {/* Metrics */}
+              </motion.div>
+            ) : (
+              /* Original showcase for other services */
+              <motion.div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  background: '#fff',
+                  border: `1px solid ${getBrandColor(index)}20`,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  boxShadow: '0 40px 80px rgba(0,0,0,0.08)'
+                }}
+                animate={{
+                  y: [0, -5, 0]
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                {/* Header bar */}
+                <div style={{
+                  height: '50px',
+                  background: `${getBrandColor(index)}08`,
+                  borderBottom: `1px solid ${getBrandColor(index)}20`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '0 25px',
+                  justifyContent: 'space-between'
+                }}>
                   <div style={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    gap: '12px'
+                    gap: '6px'
                   }}>
-                    {service.showcase.metrics.map((metric, idx) => (
-                      <div key={idx} style={{
-                        fontSize: 'clamp(0.6rem, 1.2vw, 0.8rem)',
-                        color: 'rgba(0,0,0,0.4)',
-                        textTransform: 'uppercase',
-                        letterSpacing: '1px',
-                        position: 'relative',
-                        paddingLeft: '20px',
-                        fontWeight: '300',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
-                      }}>
-                        <div style={{
-                          position: 'absolute',
-                          left: 0,
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          width: '12px',
-                          height: '2px',
-                          background: `linear-gradient(90deg, ${getBrandColor(index)}, ${getBrandColor((index + 1) % 3)})`
-                        }} />
-                        {metric}
-                      </div>
+                    {[0, 1, 2].map((dotIndex) => (
+                      <div
+                        key={dotIndex}
+                        style={{
+                          width: '8px',
+                          height: '8px',
+                          borderRadius: '50%',
+                          background: getBrandColor(dotIndex),
+                          opacity: 0.4
+                        }}
+                      />
                     ))}
                   </div>
+                  
+                  <div style={{
+                    fontSize: 'clamp(0.6rem, 1.2vw, 0.8rem)',
+                    color: getBrandColor(index),
+                    letterSpacing: '1px',
+                    textTransform: 'uppercase',
+                    fontWeight: '400',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    {service.showcase.title}
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+
+                {/* Content area */}
+                <div style={{
+                  padding: 'clamp(20px, 4vw, 40px)',
+                  height: 'calc(100% - 50px)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  {/* Geometric design elements */}
+                  <motion.div
+                    style={{
+                      position: 'absolute',
+                      top: '15%',
+                      right: '10%',
+                      width: 'clamp(100px, 20vw, 160px)',
+                      height: 'clamp(60px, 12vw, 100px)',
+                      background: `${getBrandColor(index)}08`,
+                      border: `1px solid ${getBrandColor(index)}20`,
+                      borderRadius: '8px'
+                    }}
+                    animate={{
+                      y: [0, -8, 0]
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    {/* Inner elements */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '15px',
+                      left: '15px',
+                      right: '15px',
+                      height: '2px',
+                      background: `${getBrandColor(index)}40`
+                    }} />
+                    
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '15px',
+                      left: '15px',
+                      width: '60px',
+                      height: '2px',
+                      background: getBrandColor(index),
+                      opacity: 0.6
+                    }} />
+                    
+                    <div style={{
+                      position: 'absolute',
+                      bottom: '25px',
+                      left: '15px',
+                      width: '80px',
+                      height: '1px',
+                      background: `${getBrandColor(index)}60`
+                    }} />
+                  </motion.div>
+
+                  {/* Main content */}
+                  <div style={{ zIndex: 1 }}>
+                    <h3 style={{
+                      fontSize: 'clamp(1.1rem, 2.2vw, 1.6rem)',
+                      fontWeight: '300',
+                      color: '#000',
+                      marginBottom: '15px',
+                      lineHeight: '1.2',
+                      fontFamily: 'system-ui, -apple-system, sans-serif',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis'
+                    }}>
+                      {service.showcase.title}
+                    </h3>
+                    
+                    <p style={{
+                      fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                      color: 'rgba(0,0,0,0.6)',
+                      marginBottom: '30px',
+                      lineHeight: '1.6',
+                      maxWidth: '250px',
+                      fontWeight: '300',
+                      overflow: 'hidden'
+                    }}>
+                      {service.showcase.description}
+                    </p>
+
+                    {/* Metrics */}
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '12px'
+                    }}>
+                      {service.showcase.metrics.map((metric, idx) => (
+                        <div key={idx} style={{
+                          fontSize: 'clamp(0.6rem, 1.2vw, 0.8rem)',
+                          color: 'rgba(0,0,0,0.4)',
+                          textTransform: 'uppercase',
+                          letterSpacing: '1px',
+                          position: 'relative',
+                          paddingLeft: '20px',
+                          fontWeight: '300',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap'
+                        }}>
+                          <div style={{
+                            position: 'absolute',
+                            left: 0,
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            width: '12px',
+                            height: '2px',
+                            background: `linear-gradient(90deg, ${getBrandColor(index)}, ${getBrandColor((index + 1) % 3)})`
+                          }} />
+                          {metric}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </motion.div>
         </motion.div>
       )}
