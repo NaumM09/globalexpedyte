@@ -1,4 +1,4 @@
-/* designs.css - Fixed Mobile-First Responsive Version */
+/* designs.css - Fixed Mobile-First Responsive Version with Larger Image Cards */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
@@ -225,31 +225,30 @@ body {
   align-self: flex-start;
 }
 
-/* Images Grid - Mobile Stack */
+/* Images Grid - Mobile Stack with LARGER Cards */
 .images-grid {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   align-items: center;
   width: 100%;
   margin: 1rem 0;
-  padding-right: 2rem;
-  padding-left: 3rem;
+  padding: 0 1rem;
 }
 
 .image-frame {
   position: relative;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
   width: 100%;
-  max-width: 300px;
-  height: 150px;
+  max-width: 380px; /* Increased from 300px */
+  height: 220px; /* Increased from 150px */
 }
 
 .image-frame:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
 }
 
 .image-frame img {
@@ -487,6 +486,45 @@ body {
 .project-content > *:nth-child(5) { animation-delay: 0.5s; }
 .project-content > *:nth-child(6) { animation-delay: 0.6s; }
 
+/* Small Mobile Screens - Even Larger Cards */
+@media (max-width: 480px) {
+  .image-frame {
+    max-width: 320px;
+    height: 200px;
+  }
+  
+  .images-grid {
+    gap: 1.2rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* Medium Mobile Screens */
+@media (min-width: 481px) and (max-width: 640px) {
+  .image-frame {
+    max-width: 400px;
+    height: 240px;
+  }
+  
+  .images-grid {
+    gap: 1.8rem;
+    padding: 0 1.5rem;
+  }
+}
+
+/* Large Mobile/Small Tablet */
+@media (min-width: 641px) and (max-width: 767px) {
+  .image-frame {
+    max-width: 450px;
+    height: 270px;
+  }
+  
+  .images-grid {
+    gap: 2rem;
+    padding: 0 2rem;
+  }
+}
+
 /* Tablet Styles */
 @media (min-width: 768px) {
   .designs-header {
@@ -579,8 +617,7 @@ body {
     max-width: none;
     justify-self: start;
     margin: 1rem 0;
-    padding-right: 0;
-    padding-left: 0;
+    padding: 0;
   }
   
   .image-frame {
@@ -684,7 +721,7 @@ body {
   .images-grid {
     gap: 2rem;
     justify-self: start;
-    padding-right: 0;
+    padding: 0;
   }
   
   .image-frame {
