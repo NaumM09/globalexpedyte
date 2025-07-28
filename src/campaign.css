@@ -1,0 +1,440 @@
+/* GlobalExpedyte.css - Complete White Background with Integrated Text Effects */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* Main Container */
+.global-expedyte-container {
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  min-height: 100vh;
+  padding: 20px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image Container */
+.image-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 600px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  background: 
+    radial-gradient(circle at 20% 30%, #f5f5f5 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, #e8e8e8 0%, transparent 50%),
+    linear-gradient(135deg, #ffffff 0%, #f8f8f8 50%, #f0f0f0 100%);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* Scattered Keyboard Keys */
+.keyboard-key {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(145deg, #2a2a2a 0%, #1a1a1a 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 18px;
+  font-weight: 600;
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    inset 0 -1px 0 rgba(0,0,0,0.2);
+  transform: perspective(100px) rotateX(15deg);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Keyboard Key Positions */
+.key-asterisk {
+  top: 10%;
+  left: 15%;
+  transform: perspective(100px) rotateX(15deg) rotate(-15deg);
+}
+
+.key-j {
+  top: 15%;
+  right: 20%;
+  transform: perspective(100px) rotateX(15deg) rotate(10deg);
+}
+
+.key-g {
+  top: 25%;
+  right: 10%;
+  transform: perspective(100px) rotateX(15deg) rotate(-5deg);
+}
+
+.key-s {
+  bottom: 20%;
+  left: 10%;
+  transform: perspective(100px) rotateX(15deg) rotate(20deg);
+}
+
+.key-q {
+  bottom: 15%;
+  right: 15%;
+  transform: perspective(100px) rotateX(15deg) rotate(-10deg);
+}
+
+.key-nine {
+  top: 30%;
+  left: 5%;
+  transform: perspective(100px) rotateX(15deg) rotate(15deg);
+}
+
+.key-arrow {
+  bottom: 35%;
+  left: 8%;
+  transform: perspective(100px) rotateX(15deg) rotate(5deg);
+}
+
+.key-f9 {
+  bottom: 10%;
+  right: 5%;
+  transform: perspective(100px) rotateX(15deg) rotate(-20deg);
+}
+
+/* Main Text Container */
+.text-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 90%;
+  z-index: 10;
+}
+
+/* Main Heading - Carved Effect */
+.main-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 0.9;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  color: #333333;
+  text-shadow: 
+    inset 0 2px 4px rgba(0,0,0,0.3),
+    0 1px 0 rgba(255,255,255,0.8),
+    0 2px 2px rgba(0,0,0,0.2),
+    0 0 0 1px rgba(0,0,0,0.1);
+  filter: brightness(0.85) contrast(1.1);
+}
+
+/* Subheading - Carved Effect */
+.sub-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  color: #333333;
+  text-shadow: 
+    inset 0 2px 4px rgba(0,0,0,0.3),
+    0 1px 0 rgba(255,255,255,0.8),
+    0 2px 2px rgba(0,0,0,0.2),
+    0 0 0 1px rgba(0,0,0,0.1);
+  filter: brightness(0.85) contrast(1.1);
+}
+
+/* Surface Texture Overlay */
+.surface-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 40%, rgba(0,0,0,0.02) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(0,0,0,0.03) 0%, transparent 50%);
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Alternative Text Effects (Classes for easy switching) */
+
+/* Embossed Effect */
+.text-embossed {
+  color: #1a1a1a;
+  text-shadow: 
+    0 2px 4px rgba(0,0,0,0.2),
+    0 1px 0 rgba(255,255,255,0.9),
+    0 -1px 0 rgba(0,0,0,0.2),
+    0 4px 8px rgba(0,0,0,0.1);
+  filter: brightness(1.05);
+}
+
+/* Deep Shadow Effect */
+.text-shadow {
+  color: #000000;
+  text-shadow: 
+    0 0 0 #666666,
+    0 1px 0 #555555,
+    0 2px 0 #444444,
+    0 3px 0 #333333,
+    0 4px 0 #222222,
+    0 5px 0 #111111,
+    0 6px 1px rgba(0,0,0,.2),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25);
+}
+
+/* Inner Glow Effect */
+.text-glow {
+  color: #000000;
+  text-shadow: 
+    0 0 10px #666666,
+    0 0 20px #555555,
+    0 0 30px #444444,
+    0 0 40px #333333,
+    inset 0 0 10px rgba(0,0,0,0.3),
+    0 2px 4px rgba(0,0,0,0.2);
+  -webkit-text-stroke: 1px rgba(0,0,0,0.1);
+}
+
+/* Textured Surface Effect */
+.text-textured {
+  color: #2a2a2a;
+  background: linear-gradient(45deg, 
+    transparent 25%, 
+    rgba(0,0,0,0.05) 25%, 
+    rgba(0,0,0,0.05) 50%, 
+    transparent 50%, 
+    transparent 75%, 
+    rgba(0,0,0,0.05) 75%);
+  background-size: 4px 4px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: 
+    0 1px 0 rgba(255,255,255,0.8),
+    0 2px 4px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(0,0,0,0.1);
+  filter: contrast(1.1);
+}
+
+/* Hover Effects */
+.image-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+  transition: all 0.3s ease;
+}
+
+.keyboard-key:hover {
+  transform: perspective(100px) rotateX(10deg) scale(1.05);
+  transition: all 0.2s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .global-expedyte-container {
+    padding: 10px;
+  }
+  
+  .image-container {
+    height: 500px;
+    max-width: 90%;
+  }
+  
+  .text-container {
+    width: 95%;
+  }
+  
+  .main-heading {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    margin-bottom: 0.8rem;
+  }
+  
+  .sub-heading {
+    font-size: clamp(0.9rem, 4vw, 1.2rem);
+  }
+  
+  .keyboard-key {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .image-container {
+    height: 400px;
+    border-radius: 15px;
+  }
+  
+  .main-heading {
+    font-size: clamp(1.8rem, 10vw, 3rem);
+    line-height: 0.95;
+  }
+  
+  .sub-heading {
+    font-size: clamp(0.8rem, 5vw, 1rem);
+  }
+  
+  .keyboard-key {
+    width: 35px;
+    height: 35px;
+    font-size: 12px;
+  }
+}
+
+/* Large Screens */
+@media (min-width: 1200px) {
+  .image-container {
+    max-width: 900px;
+    height: 650px;
+  }
+  
+  .main-heading {
+    font-size: clamp(3rem, 5vw, 5rem);
+  }
+  
+  .sub-heading {
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+  }
+}
+
+/* Ultra-wide Screens */
+@media (min-width: 1600px) {
+  .global-expedyte-container {
+    padding: 40px;
+  }
+  
+  .image-container {
+    max-width: 1000px;
+    height: 700px;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .main-heading,
+  .sub-heading {
+    color: #000000;
+    text-shadow: none;
+    filter: none;
+  }
+  
+  .image-container {
+    border: 2px solid #000000;
+  }
+  
+  .keyboard-key {
+    border: 1px solid #000000;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .image-container,
+  .keyboard-key {
+    transition: none;
+  }
+  
+  .image-container:hover,
+  .keyboard-key:hover {
+    transform: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .global-expedyte-container {
+    background: white;
+    color: black;
+  }
+  
+  .image-container {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .main-heading,
+  .sub-heading {
+    color: #000000;
+    text-shadow: none;
+    filter: none;
+  }
+  
+  .surface-overlay {
+    display: none;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .global-expedyte-container {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  .image-container {
+    background: 
+      radial-gradient(circle at 20% 30%, #2a2a2a 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, #333333 0%, transparent 50%),
+      linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 50%, #333333 100%);
+  }
+  
+  .main-heading,
+  .sub-heading {
+    color: #ffffff;
+    text-shadow: 
+      inset 0 2px 4px rgba(255,255,255,0.1),
+      0 1px 0 rgba(0,0,0,0.8),
+      0 2px 2px rgba(255,255,255,0.1);
+  }
+}
+
+/* Loading Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.global-expedyte-container {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Focus States for Accessibility */
+.image-container:focus-within {
+  outline: 2px solid #0066cc;
+  outline-offset: 4px;
+}
+
+/* Selection Styles */
+::selection {
+  background-color: rgba(0, 102, 204, 0.2);
+  color: inherit;
+}
+
+::-moz-selection {
+  background-color: rgba(0, 102, 204, 0.2);
+  color: inherit;
+}
