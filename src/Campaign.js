@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./campaign.css";
 
 const GlobalExpedyte = ({ onNavigate }) => {
   const [currentEffect] = useState('carved'); // Fixed to carved effect
@@ -93,6 +94,29 @@ const GlobalExpedyte = ({ onNavigate }) => {
       width: '90%',
       maxWidth: '1200px',
       zIndex: 10
+    },
+    
+    // Brand name styles
+    brandName: {
+      marginBottom: '1rem',
+      textTransform: 'lowercase'
+    },
+    
+    brandGlobal: {
+      fontSize: 'clamp(1rem, 2.5vw, 1.8rem)',
+      fontWeight: '400',
+      color: '#666',
+      letterSpacing: '0.1em',
+      display: 'block'
+    },
+    
+    brandExpedyte: {
+      fontSize: 'clamp(1.8rem, 4.5vw, 3.5rem)',
+      fontWeight: '600',
+      color: '#333',
+      letterSpacing: '0.05em',
+      display: 'block',
+      marginTop: '-0.2em'
     },
     
     // Different text effects
@@ -200,7 +224,7 @@ const GlobalExpedyte = ({ onNavigate }) => {
       default: return baseStyle;
     }
   };
-
+// eslint-disable-next-line
   const getSubTextStyle = (effect) => {
     const baseStyle = { ...styles.subText };
     switch(effect) {
@@ -244,16 +268,18 @@ const GlobalExpedyte = ({ onNavigate }) => {
 
         {/* Main Text Content */}
         <div style={styles.textContainer}>
+          <div style={styles.brandName}>
+            <span style={styles.brandGlobal}>global</span>
+            <span style={styles.brandExpedyte}>expedyte.</span>
+          </div>
+          
           <h1 style={getTextStyle(currentEffect)}>
             For Brands That<br />
             Want to<br />
             Be Stalked -<br />
             Not Skipped.
           </h1>
-          
-          <p style={getSubTextStyle(currentEffect)}>
-            Because forgettable brands don't scale.
-          </p>
+        
         </div>
 
         {/* Surface texture overlay for realism */}
