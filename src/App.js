@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import GlobalExpedyte from './Campaign';
 import Designs from './design';
-import Contact from './Contact'; // ✅ UNCOMMENT THIS LINE
+import Contact from './Contact'; // ✅ Already uncommented
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -30,7 +30,10 @@ function App() {
   return (
     <div className="App">
       {currentPage === 'home' && (
-        <GlobalExpedyte onNavigate={navigateToDesigns} />
+        <GlobalExpedyte 
+          onNavigate={navigateToDesigns} 
+          onNavigateToContact={navigateToContact} // ✅ ADDED THIS LINE
+        />
       )}
       {currentPage === 'designs' && (
         <Designs 
