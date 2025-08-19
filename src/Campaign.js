@@ -662,7 +662,7 @@ body {
             </div>
 
             <h1 className="ge-main-heading">
-              We Turn Your <span className="ge-wild-text">Wild Ideas</span><br />
+              Turn Your <span className="ge-wild-text">Wild Ideas</span><br />
               Into Digital <span className="ge-masterpieces-text">Masterpieces</span>
             </h1>
 
