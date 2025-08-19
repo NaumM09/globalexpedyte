@@ -6,8 +6,26 @@ const Designs = ({ onBackToHome, onNavigateToContact }) => {
   const [currentProject, setCurrentProject] = useState(0);
   const scrollRef = useRef(null);
 
-  // Sample project data - replace with your actual projects
+  // Updated project data with Digital Marketing as first project
   const projects = [
+    {
+      id: 0,
+      period: "PERIOD 0",
+      year: "2025",
+      title: "Digital Marketing",
+      subtitle: "SOCIAL MEDIA STRATEGY",
+      client: "Global Expedyte",
+      description: "Created engaging LinkedIn content focusing on email marketing best practices, analytics tools, social media presence, and smart marketing strategies to build brand authority and thought leadership.",
+      images: [
+        "https://i.ibb.co/8gSq0shk/global-poster.png",
+        "https://i.ibb.co/35YkTpyc/global-poster-3.png",
+        "https://i.ibb.co/7xXvmVMW/global-poster-4.png",
+        "https://i.ibb.co/5gzR0pDz/image-4.png"
+      ],
+      color: "#F5F3F0", // Beige background to match LinkedIn posts
+      textColor: "#2C1810",
+      isDigitalMarketing: true // Flag to apply special styling
+    },
     {
       id: 1,
       period: "PERIOD 1",
@@ -207,7 +225,7 @@ const Designs = ({ onBackToHome, onNavigateToContact }) => {
         {projects.map((project, index) => (
           <section 
             key={project.id} 
-            className="project-slide"
+            className={`project-slide ${project.isDigitalMarketing ? 'digital-marketing-slide' : ''}`}
             style={{ 
               backgroundColor: project.color,
               color: project.textColor 
@@ -229,20 +247,59 @@ const Designs = ({ onBackToHome, onNavigateToContact }) => {
                 {project.title}
               </h1>
 
-              {/* Images Grid */}
+              {/* Images Grid - Special layout for Digital Marketing */}
               <div className="images-grid">
-                {project.images.map((image, imgIndex) => (
-                  <div key={imgIndex} className={`image-frame frame-${imgIndex + 1}`}>
-                    <img 
-                      src={image} 
-                      alt={`${project.client} project ${imgIndex + 1}`}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.src = 'https://i.ibb.co/20hhhH7w/GE.png'
-                      }}
-                    />
-                  </div>
-                ))}
+                {project.isDigitalMarketing ? (
+                  <>
+                    <div className="image-frame digital-marketing-frame">
+                      <img 
+                        src={project.images[0]} 
+                        alt="Smart Marketing Strategy"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.src = 'https://i.ibb.co/20hhhH7w/GE.png'
+                        }}
+                      />
+                      <div className="image-caption">Smart Marketing Strategy</div>
+                    </div>
+                    <div className="image-frame digital-marketing-frame">
+                      <img 
+                        src={project.images[1]} 
+                        alt="Analytics Tools Overview"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.src = 'https://i.ibb.co/20hhhH7w/GE.png'
+                        }}
+                      />
+                      <div className="image-caption">Analytics Tools</div>
+                    </div>
+                    <div className="image-frame digital-marketing-frame">
+                      <img 
+                        src={project.images[2]} 
+                        alt="TikTok Strategy"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.src = 'https://i.ibb.co/20hhhH7w/GE.png'
+                        }}
+                      />
+                      <div className="image-caption">Social Media Strategy</div>
+                    </div>
+                  </>
+                ) : (
+                  // Original layout for other projects
+                  project.images.map((image, imgIndex) => (
+                    <div key={imgIndex} className={`image-frame frame-${imgIndex + 1}`}>
+                      <img 
+                        src={image} 
+                        alt={`${project.client} project ${imgIndex + 1}`}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.target.src = 'https://i.ibb.co/20hhhH7w/GE.png'
+                        }}
+                      />
+                    </div>
+                  ))
+                )}
               </div>
 
               {/* Bottom Section */}

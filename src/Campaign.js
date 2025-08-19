@@ -666,7 +666,7 @@ body {
             </h1>
 
             <p className="ge-sub-heading">
-              Your brand deserves more than templates and cookie-cutter solutions. We build digital experiences that reflect who you really are and where you're headed.
+              Your brand deserves more than templates. We build digital experiences that reflect who you really are and where you're headed.
             </p>
 
             {/* Services Grid */}
