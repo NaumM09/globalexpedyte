@@ -69,7 +69,7 @@ const Designs = ({ onBackToHome, onNavigateToContact }) => {
       images: [
         "https://i.ibb.co/SX5b24HV/Stimela-logos.jpg",
         "https://i.ibb.co/jvf7SNQn/stimela-poster-2.png",
-        "https://i.ibb.co/7tT5F98k/Stimela-logos-transparent-3.png",
+        "https://i.ibb.co/27Qx1mx5/stimela-poster-3.png"
       ],
       color: "#4ECDC4",
       textColor: "#1A1A1A"

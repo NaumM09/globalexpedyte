@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Footer from './Footer';
 
 const GlobalExpedyte = ({ onNavigate, onNavigateToContact }) => {
   // All URLs centralized in JavaScript
@@ -737,6 +738,9 @@ body {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <Footer/>
       </div>
     </>
   );

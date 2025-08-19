@@ -1,401 +1,144 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import './Footer.css';
 
-const Footer = ({ setCurrentSection }) => {
+const Footer = ({ onNavigateToContact, onNavigateToDesigns }) => {
+  const [hoveredLink, setHoveredLink] = useState(null);
+
+  const currentYear = new Date().getFullYear();
+
+  const services = [
+    'Logo Design',
+    'Web Magic', 
+    'Brand Strategy',
+    'Digital Marketing'
+  ];
+
+  const companyLinks = [
+    { name: 'About Us', action: () => {} },
+    { name: 'Contact', action: onNavigateToContact },
+    { name: 'Our Work', action: onNavigateToDesigns },
+    { name: 'Services', action: () => {} }
+  ];
+
+  const legalLinks = [
+    { name: 'Terms of Service', action: () => {} },
+    { name: 'Privacy Policy', action: () => {} },
+    { name: 'Cookie Policy', action: () => {} }
+  ];
+
+  const handleBookConsult = () => {
+    window.open('https://calendly.com/globalexpedyte/30min', '_blank');
+  };
+
+  const handleLinkedInClick = () => {
+    window.open('https://linkedin.com/company/globalexpedyte', '_blank');
+  };
+
   return (
-    <motion.footer
-      style={{
-        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)',
-        color: '#ffffff',
-        padding: '4rem 2rem 2rem',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.8 }}
-    >
-      {/* Animated background elements */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundImage: `
-          radial-gradient(circle at 20% 80%, rgba(255,255,255,0.03) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(255,255,255,0.03) 0%, transparent 50%)
-        `
-      }} />
-
-      {/* Subtle grid overlay */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: `
-          linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
-        `,
-        backgroundSize: '60px 60px',
-        opacity: 0.3
-      }} />
-
-      <div style={{
-        maxWidth: '1400px',
-        margin: '0 auto',
-        position: 'relative',
-        zIndex: 2
-      }}>
-        {/* Main footer content */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '4rem',
-          marginBottom: '4rem'
-        }}>
-          
+    <footer className="ge-footer">
+      <div className="ge-footer-content">
+        <div className="ge-footer-main">
           {/* Brand Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem',
-              marginBottom: '2rem'
-            }}>
-              <div style={{
-                width: '40px',
-                height: '40px',
-                background: 'linear-gradient(135deg, #ffffff 0%, #cccccc 100%)',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-                <img
-                  src="/logo.png"
-                  alt="Global Expedyte"
-                  style={{
-                    width: '24px',
-                    height: '24px',
-                    objectFit: 'contain'
-                  }}
-                />
-              </div>
-              <span style={{
-                fontSize: '1.2rem',
-                fontWeight: '700',
-                color: '#ffffff',
-                letterSpacing: '-0.02em',
-                fontFamily: 'Inter, system-ui, sans-serif'
-              }}>
-                Global Expedyte
-              </span>
+          <div className="ge-footer-brand">
+            <div className="ge-footer-logo-container">
+              <img 
+                src="https://i.ibb.co/20hhhH7w/GE.png"
+                alt="Global Expedyte Logo" 
+                className="ge-footer-logo"
+              />
+              <span className="ge-footer-brand-text">global expedyte.</span>
+            </div>
+            <div className="ge-footer-brand-desc">
+        Creative Digital Studio
             </div>
             
-            <p style={{
-              fontSize: '1.1rem',
-              color: 'rgba(255,255,255,0.8)',
-              lineHeight: '1.7',
-              margin: '0 0 2rem 0',
-              fontWeight: '400',
-              maxWidth: '350px',
-              fontFamily: 'Inter, system-ui, sans-serif'
-            }}>
-              Creating unforgettable digital experiences that drive results and elevate brands to new heights.
-            </p>
-
-            {/* Social Links */}
-            <div style={{
-              display: 'flex',
-              gap: '1rem'
-            }}>
-              {['LinkedIn', 'Twitter', 'Instagram'].map((social, index) => (
-                <motion.button
-                  key={social}
-                  style={{
-                    width: '44px',
-                    height: '44px',
-                    background: 'rgba(255,255,255,0.1)',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    borderRadius: '12px',
-                    color: 'rgba(255,255,255,0.8)',
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    transition: 'all 0.3s ease'
-                  }}
-                  whileHover={{
-                    background: 'rgba(255,255,255,0.2)',
-                    borderColor: 'rgba(255,255,255,0.4)',
-                    y: -2
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {social.charAt(0)}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Services */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <h4 style={{
-              fontSize: '1rem',
-              fontWeight: '600',
-              color: '#ffffff',
-              letterSpacing: '0.05em',
-              textTransform: 'uppercase',
-              marginBottom: '2rem',
-              fontFamily: 'Inter, system-ui, sans-serif'
-            }}>
-              Our Services
-            </h4>
-            
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem'
-            }}>
-              {[
-                'Brand Strategy & Identity',
-                'Web Development',
-                'Mobile Applications',
-                'Digital Marketing',
-                'Custom Software'
-              ].map((service, index) => (
-                <motion.button
-                  key={service}
-                  style={{
-                    background: 'transparent',
-                    border: 'none',
-                    color: 'rgba(255,255,255,0.7)',
-                    fontSize: '1rem',
-                    fontWeight: '400',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    fontFamily: 'Inter, system-ui, sans-serif',
-                    transition: 'all 0.3s ease',
-                    padding: '0.5rem 0',
-                    position: 'relative'
-                  }}
-                  whileHover={{
-                    color: '#ffffff',
-                    x: 8
-                  }}
-                  onClick={() => setCurrentSection('services')}
-                >
-                  <span style={{
-                    position: 'absolute',
-                    left: '-1rem',
-                    opacity: 0,
-                    transition: 'opacity 0.3s ease'
-                  }}>
-                    →
-                  </span>
-                  {service}
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Contact & CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h4 style={{
-              fontSize: '1rem',
-              fontWeight: '600',
-              color: '#ffffff',
-              letterSpacing: '0.05em',
-              textTransform: 'uppercase',
-              marginBottom: '2rem',
-              fontFamily: 'Inter, system-ui, sans-serif'
-            }}>
-              Start Your Project
-            </h4>
-            
-            <div style={{
-              marginBottom: '2rem'
-            }}>
-              <p style={{
-                fontSize: '1.1rem',
-                color: 'rgba(255,255,255,0.8)',
-                fontWeight: '400',
-                lineHeight: '1.6',
-                margin: '0 0 1.5rem 0',
-                fontFamily: 'Inter, system-ui, sans-serif'
-              }}>
-                Ready to transform your brand?
-              </p>
-              
-              <motion.button
-                style={{
-                  background: 'linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%)',
-                  border: 'none',
-                  color: '#0a0a0a',
-                  padding: '1rem 2rem',
-                  fontSize: '0.95rem',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  borderRadius: '12px',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  letterSpacing: '-0.01em',
-                  transition: 'all 0.3s ease',
-                  boxShadow: '0 4px 12px rgba(255,255,255,0.2)'
-                }}
-                whileHover={{
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 8px 20px rgba(255,255,255,0.3)'
-                }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setCurrentSection('contact')}
-              >
-                Let's Talk →
-              </motion.button>
-            </div>
-
             {/* Contact Info */}
-            <div style={{
-              padding: '1.5rem',
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              borderRadius: '12px',
-              backdropFilter: 'blur(10px)'
-            }}>
-              <div style={{
-                fontSize: '0.9rem',
-                color: 'rgba(255,255,255,0.6)',
-                marginBottom: '0.5rem',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                fontFamily: 'Inter, system-ui, sans-serif'
-              }}>
-                Direct Contact
+            <div style={{ marginTop: '24px' }}>
+              <div style={{ color: '#b0b0b0', fontSize: '14px', marginBottom: '8px' }}>
+          info@globalexpedyte.co.za
               </div>
-              <div style={{
-                fontSize: '1.1rem',
-                color: '#ffffff',
-                fontWeight: '500',
-                fontFamily: 'Inter, system-ui, sans-serif'
-              }}>
-                info@globalexpedyte.co.za
+              <div style={{ color: '#808080', fontSize: '12px' }}>
+                GLOBAL EXPEDYTE PTY LTD
               </div>
             </div>
-          </motion.div>
+
+            {/* LinkedIn */}
+            <div className="ge-footer-social">
+              <div
+                className="ge-footer-social-link"
+                onClick={handleLinkedInClick}
+                title="Follow us on LinkedIn"
+              >
+                <svg 
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 24 24" 
+                  fill="currentColor"
+                >
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Company Section */}
+          <div className="ge-footer-section">
+            <h3 className="ge-footer-section-title">Company</h3>
+            <div className="ge-footer-links">
+              {companyLinks.map((link, index) => (
+                <div
+                  key={index}
+                  className="ge-footer-link"
+                  onClick={link.action}
+                  onMouseEnter={() => setHoveredLink(`company-${index}`)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                >
+                  {link.name}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Services & Legal Combined */}
+          <div className="ge-footer-section">
+            <h3 className="ge-footer-section-title">Services</h3>
+            <div className="ge-footer-links">
+              {services.map((service, index) => (
+                <div
+                  key={index}
+                  className="ge-footer-link"
+                  onMouseEnter={() => setHoveredLink(`service-${index}`)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                >
+                  {service}
+                </div>
+              ))}
+            </div>
+
+            {/* Book Consultation Button */}
+            <div
+              className="ge-footer-link ge-footer-consult-link"
+              onClick={handleBookConsult}
+              onMouseEnter={() => setHoveredLink('consult')}
+              onMouseLeave={() => setHoveredLink(null)}
+            >
+              Book Consultation
+            </div>
+          </div>
         </div>
 
-        {/* Bottom section */}
-        <motion.div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingTop: '2rem',
-            borderTop: '1px solid rgba(255,255,255,0.1)',
-            flexWrap: 'wrap',
-            gap: '1rem'
-          }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <div style={{
-            fontSize: '0.9rem',
-            color: 'rgba(255,255,255,0.6)',
-            fontFamily: 'Inter, system-ui, sans-serif'
-          }}>
-            © 2025 Global Expedyte. Crafted with precision.
+        {/* Footer Bottom */}
+        <div className="ge-footer-bottom">
+          <div className="ge-footer-copyright">
+            © {currentYear} Global Expedyte. All rights reserved.
           </div>
-
-          <div style={{
-            display: 'flex',
-            gap: '2rem',
-            alignItems: 'center'
-          }}>
-            {['Privacy Policy', 'Terms of Service'].map((item) => (
-              <motion.button
-                key={item}
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  color: 'rgba(255,255,255,0.6)',
-                  fontSize: '0.9rem',
-                  fontWeight: '400',
-                  cursor: 'pointer',
-                  fontFamily: 'Inter, system-ui, sans-serif',
-                  transition: 'all 0.3s ease'
-                }}
-                whileHover={{
-                  color: 'rgba(255,255,255,0.9)'
-                }}
-              >
-                {item}
-              </motion.button>
-            ))}
+          
+          <div className="ge-footer-made-with">
+            Made with <span className="ge-footer-heart">♥</span> in South Africa
           </div>
-        </motion.div>
+        </div>
       </div>
-
-      {/* Floating accent elements */}
-      <motion.div
-        style={{
-          position: 'absolute',
-          bottom: '2rem',
-          left: '5%',
-          width: '60px',
-          height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
-        }}
-        animate={{
-          x: [0, 100, 0],
-          opacity: [0.3, 0.8, 0.3]
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
-
-      <motion.div
-        style={{
-          position: 'absolute',
-          top: '2rem',
-          right: '5%',
-          width: '40px',
-          height: '1px',
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
-        }}
-        animate={{
-          x: [0, -80, 0],
-          opacity: [0.3, 0.8, 0.3]
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1
-        }}
-      />
-    </motion.footer>
+    </footer>
   );
 };
 
