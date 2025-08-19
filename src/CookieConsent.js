@@ -57,7 +57,6 @@ const CookieConsent = () => {
         {showCookieAnimation && (
           <div className="cookie-animation-overlay">
             <div className="animated-cookie">🍪</div>
-            <div className="thank-you-text">Thanks! Cookies accepted</div>
             <div className="cookie-crumbs crumb-1">🍪</div>
             <div className="cookie-crumbs crumb-2">🍪</div>
             <div className="cookie-crumbs crumb-3">🍪</div>
