@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import GlobalExpedyte from './Campaign';
 import Designs from './design';
-import Contact from './Contact'; // ✅ Already uncommented
+import Contact from './Contact';
+import CookieConsent from './CookieConsent'; // Add this import
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -32,7 +33,7 @@ function App() {
       {currentPage === 'home' && (
         <GlobalExpedyte 
           onNavigate={navigateToDesigns} 
-          onNavigateToContact={navigateToContact} // ✅ ADDED THIS LINE
+          onNavigateToContact={navigateToContact}
         />
       )}
       {currentPage === 'designs' && (
@@ -51,6 +52,9 @@ function App() {
           qrSource="direct"
         />
       )}
+      
+      {/* Global Cookie Consent - appears on all pages */}
+      <CookieConsent />
     </div>
   );
 }
